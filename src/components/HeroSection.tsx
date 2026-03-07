@@ -71,38 +71,37 @@ const HeroSection = () => {
     resize();
     window.addEventListener('resize', resize);
 
-    const chars = '01{}[]<>/*#=+-;:.abcdefghijklmnopqrstuvwxyz';
-    const fontSize = 14;
+    const chars = '01{}[]<>/*#=+-;:.'; // Kept it clean for a more "code" feel
+    const fontSize = 16;
     const columns = Math.floor(canvas.width / fontSize);
-    const drops: number[] = Array(columns).fill(1);
+    
+    const drops: number[] = Array(columns).fill(0).map(() => Math.floor(Math.random() * -100));
 
     const draw = () => {
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.25)'; 
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.font = `${fontSize}px monospace`;
+      
+      ctx.font = `500 ${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
-        const char = chars[Math.floor(Math.random() * chars.length)];
-
-        // Lead character — brighter
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-
-        // Trail character — slightly dimmer
-        if (drops[i] > 1) {
-          const trailChar = chars[Math.floor(Math.random() * chars.length)];
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.07)';
-          ctx.fillText(trailChar, i * fontSize, (drops[i] - 1) * fontSize);
+        if (drops[i] < 0) {
+          drops[i]++;
+          continue;
         }
 
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.97) {
-          drops[i] = 0;
+        const char = chars[Math.floor(Math.random() * chars.length)];
+
+        ctx.fillStyle = 'rgba(59, 130, 246, 0.4)'; 
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.99) {
+          drops[i] = -Math.floor(Math.random() * 60);
         }
         drops[i]++;
       }
     };
 
-    const interval = setInterval(draw, 60);
+    const interval = setInterval(draw, 45); // Faster interval for smoother motion
     return () => {
       clearInterval(interval);
       window.removeEventListener('resize', resize);
@@ -111,10 +110,10 @@ const HeroSection = () => {
 
   return (
     <section className="min-h-screen flex flex-col justify-center items-center relative px-6 overflow-hidden bg-[#0f172a]">
-      {/* Matrix rain canvas */}
+      {/* Matrix rain canvas with a subtle blur */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="absolute inset-0 z-0 pointer-events-none blur-[1px]"
       />
 
       {/* Top-left code comment */}
@@ -133,7 +132,7 @@ const HeroSection = () => {
       {/* Top-right line numbers */}
       <div className="absolute top-28 right-6 md:right-10 z-10 hidden md:block">
         <p className="font-mono text-xs text-foreground/40 leading-relaxed text-right font-medium">
-          {Array.from({ length: 6 }, (_, i) => (
+          {Array.from({ length: 9 }, (_, i) => (
             <span key={i} className="block">
               {String(i + 1).padStart(3, '0')}
             </span>

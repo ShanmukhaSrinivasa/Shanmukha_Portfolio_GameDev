@@ -4,10 +4,10 @@ import { playClick } from '@/hooks/useSoundEffects';
 const links = [
   { label: 'About', href: '#about' },
   { label: 'Education', href: '#education' },
-  { label: 'Experience', href: '#experience' },
+  { label: 'Shipped Titles', href: '#experience' },
   { label: 'Projects', href: '#projects' },
   { label: 'Technical Skills', href: '#skills' },
-  { label: 'Blog', href: 'https://durgavaraprasad.hashnode.dev/' },
+  { label: 'Itch.io', href: 'https://shanmukha.itch.io/' },
   { label: 'Contact', href: '#contact' },
 ];
 

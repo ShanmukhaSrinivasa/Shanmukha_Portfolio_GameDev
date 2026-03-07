@@ -29,12 +29,11 @@ const Terminal = () => {
       id: 0,
       type: 'response',
       content: (
-        <div className="mb-2">
-          <p>Welcome to Vara's Portfolio Terminal v1.0.0</p>
-          <p>
-            I am a conversational AI. Type{' '}
-            <span className="text-green-400">help</span> for commands, or just
-            chat with me!
+        <div className="mb-2 text-xs md:text-sm">
+          <p className="text-blue-400 font-bold">WELCOME TO SHANMUKHA_OS v1.0.4</p>
+          <p className="text-white/60">System status: <span className="text-green-500 underline">OPTIMIZED</span></p>
+          <p className="mt-2 text-white/80 font-medium">
+            Type <span className="text-blue-400 font-bold">help</span> to view available subroutines.
           </p>
         </div>
       ),
@@ -43,19 +42,16 @@ const Terminal = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Focus input when clicking anywhere in the terminal
   const handleTerminalClick = () => {
     inputRef.current?.focus();
   };
 
-  // Scroll to bottom on new history
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [history, isOpen]);
 
-  // Global keyboard shortcut
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -77,123 +73,50 @@ const Terminal = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
-  // ... existing imports
-
   const getCommandResponse = (cmd: string): React.ReactNode | null => {
     switch (cmd) {
       case 'help':
         return (
-          <div className="grid grid-cols-[100px_1fr] gap-2">
-            <span className="text-green-400">about</span>{' '}
-            <span>Learn about me</span>
-            <span className="text-green-400">skills</span>{' '}
-            <span>View technical skills</span>
-            <span className="text-green-400">projects</span>{' '}
-            <span>List recent projects</span>
-            <span className="text-green-400">contact</span>{' '}
-            <span>How to reach me</span>
-            <span className="text-green-400">clear</span>{' '}
-            <span>Clear the terminal</span>
-            <span className="text-green-400">exit</span>{' '}
-            <span>Close terminal</span>
+          <div className="grid grid-cols-[100px_1fr] gap-2 text-[11px] md:text-xs">
+            <span className="text-blue-400 font-bold uppercase">about</span> <span>Credentials & Background</span>
+            <span className="text-blue-400 font-bold uppercase">skills</span> <span>Technical Arsenal</span>
+            <span className="text-blue-400 font-bold uppercase">projects</span> <span>Shipped Titles</span>
+            <span className="text-blue-400 font-bold uppercase">contact</span> <span>Signal Frequency</span>
+            <span className="text-blue-400 font-bold uppercase">clear</span> <span>Wipe Buffer</span>
+            <span className="text-blue-400 font-bold uppercase">exit</span> <span>Terminate Session</span>
           </div>
         );
       case 'about':
-        return "I'm Pappuri Durga Vara Prasad, a passionate developer specializing in Flutter, React, and Blockchain technologies. I build modern, high-performance applications.";
+        return "Game Development student specialized in Unity and Unreal Engine 5. I focus on high-performance C++ systems and robust C# gameplay mechanics. Currently focused on building polished, player-centric experiences.";
       case 'skills':
         return (
-          <div>
-            <p className="mb-1">CORE STACK:</p>
-            <p>• Flutter / Dart</p>
-            <p>• React / TypeScript</p>
-            <p>• Firebase / Node.js</p>
-            <p>• Blockchain (Aptos/Move)</p>
+          <div className="text-[11px] md:text-xs leading-relaxed">
+            <p className="text-blue-400 font-bold mb-1">CORE_ENGINE_STRENGTHS:</p>
+            <p>• Unity & Unreal Engine 5</p>
+            <p>• C# & C++ Optimization</p>
+            <p>• Physics-Based Gameplay Systems</p>
+            <p>• VFX Graph & Shader Logic</p>
           </div>
         );
       case 'projects':
         return (
-          <div className="flex flex-col gap-1">
-            <a href="#projects" className="text-blue-400 hover:underline">
-              1. EduPredict (AI Analytics)
-            </a>
-            <a href="#projects" className="text-blue-400 hover:underline">
-              2. AOTMS (Transport Mgmt)
-            </a>
-            <a href="#projects" className="text-blue-400 hover:underline">
-              3. Vara's Portfolio
-            </a>
+          <div className="flex flex-col gap-1 text-[11px] md:text-xs">
+            <a href="https://shanmukha.itch.io/orbit-rogue" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">1. Orbit Rogue (Boss Rush)</a>
+            <a href="https://shanmukha.itch.io/arcane-ascent" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">2. Arcane Ascent (Platformer)</a>
+            <a href="https://shanmukha.itch.io/pixel-dash" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">3. Pixel Dash (Endless Runner)</a>
           </div>
         );
       case 'contact':
         return (
-          <div>
-            <p>
-              Email:{' '}
-              <a
-                href="mailto:pappuridurgavaraprasad4pl@gmail.com"
-                className="text-blue-400 hover:underline"
-              >
-                pappuridurgavaraprasad4pl@gmail.com
-              </a>
-            </p>
-            <p>
-              LinkedIn:{' '}
-              <a
-                href="https://www.linkedin.com/in/durga-vara-prasad-pappuri-1797701b6/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:underline"
-              >
-                www.linkedin.com/in/durga-vara-prasad-pappuri-1797701b6/
-              </a>
-            </p>
-            <p>
-              GitHub:{' '}
-              <a
-                href="https://github.com/VARA4u-tech"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:underline"
-              >
-                github.com/VARA4u-tech
-              </a>
-            </p>
+          <div className="text-[11px] md:text-xs leading-relaxed">
+            <p>Email: <a href="mailto:shannugopa@gmail.com" className="text-blue-400 hover:underline">shannugopa@gmail.com</a></p>
+            <p>GitHub: <a href="https://github.com/ShanmukhaSrinivasa" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">github.com/ShanmukhaSrinivasa</a></p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/shanmukha-gopa-1599748a/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">linkedin.com/in/shanmukha-gopa</a></p>
           </div>
         );
       default:
         return null;
     }
-  };
-
-  const processQuery = (input: string): React.ReactNode | null => {
-    const lower = input.toLowerCase();
-
-    // Greeting
-    if (lower.match(/^(hi|hello|hey|greetings)/)) {
-      return "Hello! I'm Vara's virtual assistant. How can I help you today?";
-    }
-
-    // About
-    if (lower.match(/(who|about|author|creator|developer)/)) {
-      return getCommandResponse('about');
-    }
-
-    // Skills
-    if (lower.match(/(skill|stack|tech|language|framework)/)) {
-      return getCommandResponse('skills');
-    }
-
-    // Projects
-    if (lower.match(/(project|work|app|site|portfolio)/)) {
-      return getCommandResponse('projects');
-    }
-
-    // Contact
-    if (lower.match(/(contact|email|reach|hire|github|linkedin)/)) {
-      return getCommandResponse('contact');
-    }
-
-    return null;
   };
 
   const handleCommand = (cmd: string) => {
@@ -202,14 +125,9 @@ const Terminal = () => {
 
     const newHistory: CommandOutput[] = [
       ...history,
-      {
-        id: Date.now(),
-        type: 'command',
-        content: `guest@portfolio:~$ ${cmd}`,
-      },
+      { id: Date.now(), type: 'command', content: `USER@SHANMUKHA_OS:~$ ${cmd}` },
     ];
 
-    // Check for clear/exit first
     if (trimmedCmd.toLowerCase() === 'clear') {
       playClick();
       setHistory([]);
@@ -221,33 +139,24 @@ const Terminal = () => {
       return;
     }
 
-    // Try exact command match
     let response = getCommandResponse(trimmedCmd.toLowerCase());
-
-    // If no exact match, try natural language processing
     if (!response) {
-      response = processQuery(trimmedCmd);
+      const lower = trimmedCmd.toLowerCase();
+      if (lower.match(/^(hi|hello|hey)/)) response = "Connection established. How can I assist with your deployment today?";
+      else if (lower.match(/(who|about|dev)/)) response = getCommandResponse('about');
+      else if (lower.match(/(skill|engine|unity|unreal|cpp|c#)/)) response = getCommandResponse('skills');
+      else if (lower.match(/(project|game|itch|work)/)) response = getCommandResponse('projects');
+      else if (lower.match(/(contact|hire|email|reach)/)) response = getCommandResponse('contact');
     }
 
-    // Default fallback
     if (!response) {
       playError();
-      response = (
-        <span className="text-red-400">
-          Command not understood. Try asking "who are you?", "show skills", or
-          type 'help'.
-        </span>
-      );
+      response = <span className="text-red-500">Error: Subroutine '{cmd}' not found. Type 'help'.</span>;
     } else {
       playSuccess();
     }
 
-    newHistory.push({
-      id: Date.now() + 1,
-      type: 'response',
-      content: response,
-    });
-
+    newHistory.push({ id: Date.now() + 1, type: 'response', content: response });
     setHistory(newHistory);
   };
 
@@ -260,16 +169,13 @@ const Terminal = () => {
 
   if (!isOpen) {
     return (
-      <div className="fixed bottom-6 right-6 z-50 group">
-        <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-          Ctrl + K
+      <div className="fixed bottom-8 right-8 z-50 group">
+        <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-blue-600 text-white text-[9px] font-black uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+          EXEC (CTRL+K)
         </div>
         <button
-          onClick={() => {
-            playTerminalOpen();
-            setIsOpen(true);
-          }}
-          className="p-3 bg-white border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-white transition-all duration-300"
+          onClick={() => { playTerminalOpen(); setIsOpen(true); }}
+          className="p-2.5 bg-[#161e2d] border-2 border-blue-500 text-blue-400 shadow-[4px_4px_0px_0px_rgba(59,130,246,0.5)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-300"
           aria-label="Open Terminal"
         >
           <TerminalIcon className="w-5 h-5" />
@@ -279,77 +185,40 @@ const Terminal = () => {
   }
 
   return (
-    <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
-      onClick={() => setIsOpen(false)}
-    >
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4" onClick={() => setIsOpen(false)}>
       <div
-        className={`bg-[#0c0c0c] border border-white/20 shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)] w-full transition-all duration-300 flex flex-col font-mono text-sm md:text-base ${
-          isMaximized ? 'h-[95vh] w-[95vw]' : 'max-w-2xl h-[600px]'
+        className={`bg-[#0c0c0c] border-2 border-blue-500/30 shadow-[12px_12px_0px_0px_rgba(59,130,246,0.2)] w-full transition-all duration-300 flex flex-col font-mono ${
+          isMaximized ? 'h-[95vh] w-[95vw]' : 'max-w-2xl h-[550px]'
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-[#1a1a1a]">
-          <div className="flex items-center gap-2">
-            <div
-              className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 cursor-pointer"
-              onClick={() => {
-                playTerminalClose();
-                setIsOpen(false);
-              }}
-            />
-            <div
-              className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 cursor-pointer"
-              onClick={() => setIsMaximized(!isMaximized)}
-            />
-            <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 cursor-pointer" />
-            <span className="ml-2 text-white/60 text-xs">
-              guest@vara-portfolio:~
-            </span>
+        <div className="flex items-center justify-between px-4 py-2 border-b-2 border-blue-500/20 bg-[#161e2d]">
+          <div className="flex items-center gap-3">
+            <div className="w-2.5 h-2.5 bg-red-500/80 rounded-full cursor-pointer hover:bg-red-500" onClick={() => { playTerminalClose(); setIsOpen(false); }} />
+            <div className="w-2.5 h-2.5 bg-yellow-500/80 rounded-full cursor-pointer hover:bg-yellow-500" onClick={() => setIsMaximized(!isMaximized)} />
+            <div className="w-2.5 h-2.5 bg-green-500/80 rounded-full" />
+            <span className="ml-3 text-blue-400/60 text-[9px] font-black uppercase tracking-widest">SESSION_ACTIVE: SHANMUKHA.EXE</span>
           </div>
-          <div className="flex items-center gap-3 text-white/40">
-            <button
-              onClick={() => setIsMaximized(!isMaximized)}
-              className="hover:text-white"
-            >
-              {isMaximized ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
-            </button>
-            <button
-              onClick={() => {
-                playTerminalClose();
-                setIsOpen(false);
-              }}
-              className="hover:text-white"
-            >
-              <X size={14} />
-            </button>
-          </div>
+          <button onClick={() => { playTerminalClose(); setIsOpen(false); }} className="text-blue-500/40 hover:text-white transition-colors">
+            <X size={14} />
+          </button>
         </div>
 
-        {/* content */}
-        <div
-          className="flex-1 overflow-y-auto p-4 text-white/90 selection:bg-white/20"
-          ref={scrollRef}
-          onClick={handleTerminalClick}
-        >
+        <div className="flex-1 overflow-y-auto p-6 text-blue-100/90 selection:bg-blue-500/30 custom-scrollbar" ref={scrollRef} onClick={handleTerminalClick}>
           {history.map((entry) => (
-            <div key={entry.id} className="mb-2 break-words">
+            <div key={entry.id} className="mb-3 break-words leading-relaxed font-medium">
               {entry.content}
             </div>
           ))}
 
-          <form onSubmit={handleSubmit} className="flex items-center gap-2">
-            <span className="text-green-400 shrink-0">guest@portfolio:~$</span>
+          <form onSubmit={handleSubmit} className="flex items-center gap-2 mt-4">
+            <span className="text-blue-500 font-black shrink-0">USER@SHANMUKHA_OS:~$</span>
             <input
               ref={inputRef}
               type="text"
               value={input}
-              onChange={(e) => {
-                setInput(e.target.value);
-                playKeyTick();
-              }}
-              className="flex-1 bg-transparent border-none outline-none text-white focus:ring-0 p-0"
+              onChange={(e) => { setInput(e.target.value); playKeyTick(); }}
+              className="flex-1 bg-transparent border-none outline-none text-white focus:ring-0 p-0 font-bold"
               autoFocus
               spellCheck={false}
               autoComplete="off"
