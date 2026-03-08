@@ -17,20 +17,16 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 py-6 bg-background/80 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto px-6">
-        {/* Desktop */}
+        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center justify-center gap-0">
           {links.map((link, i) => (
-            <span key={link.href} className="flex items-center">
+            <span key={link.label} className="flex items-center">
               <a
                 href={link.href}
-                className="nav-link px-4 py-1"
+                className="nav-link px-4 py-1 font-mono text-[10px] uppercase tracking-widest text-slate-400 hover:text-blue-500 transition-colors"
                 onClick={playClick}
                 target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={
-                  link.href.startsWith('http')
-                    ? 'noopener noreferrer'
-                    : undefined
-                }
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
               >
                 {link.label}
               </a>
@@ -41,37 +37,33 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Mobile toggle */}
+        {/* Mobile Toggle */}
         <div className="md:hidden flex justify-center">
           <button
             onClick={() => {
               playClick();
               setOpen(!open);
             }}
-            className="nav-link"
+            className="nav-link font-mono text-[10px] uppercase tracking-widest text-blue-500"
           >
-            {open ? 'Close' : 'Menu'}
+            {open ? '[ Close ]' : '[ Menu ]'}
           </button>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile Menu */}
         {open && (
-          <div className="md:hidden flex flex-col items-center gap-4 mt-6">
+          <div className="md:hidden flex flex-col items-center gap-4 mt-6 bg-[#0f172a] p-6 border border-blue-500/10">
             {links.map((link) => (
               <a
-                key={link.href}
+                key={link.label}
                 href={link.href}
-                className="nav-link"
+                className="nav-link font-mono text-[10px] uppercase tracking-widest"
                 onClick={() => {
                   playClick();
                   setOpen(false);
                 }}
                 target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={
-                  link.href.startsWith('http')
-                    ? 'noopener noreferrer'
-                    : undefined
-                }
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
               >
                 {link.label}
               </a>
