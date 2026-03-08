@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
 import { ProjectDetail } from './pages/ProjectDetail'; // Import your detail page
 import NotFound from './pages/NotFound';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const queryClient = new QueryClient();
 
