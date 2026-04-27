@@ -25,7 +25,7 @@ const experiences = [
 ];
 
 const ExperienceSection = () => (
-  <SectionBlock id="experience" title="Shipped Titles">
+  <SectionBlock id="experience" title="Featured Games">
     <div className="space-y-12">
       {experiences.map((exp) => (
         <div
