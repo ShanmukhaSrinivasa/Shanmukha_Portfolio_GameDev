@@ -1,6 +1,6 @@
 # SHANMUKHA_OS v1.0.4
 
-A high-performance, data-driven portfolio archive for Game Development.
+A high-performance, data-driven portfolio website for Game Development.
 
 ## Architecture
 - **Framework**: React 18 + Vite (optimized build pipeline)
