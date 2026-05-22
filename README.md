@@ -14,3 +14,5 @@ A high-performance, data-driven portfolio website for Game Development.
 - **Dynamic Embeds**: Automated itch.io WebGL integration for live gameplay execution.
 - **Splash Sequence**: Managed React state-based "boot sequence" for terminal immersion.
 - **Responsive Systems**: Fully fluid layout optimized for both desktop and mobile review.
+
+Live preview - https://shanmukha-srinivasa-portfolio.vercel.app/
