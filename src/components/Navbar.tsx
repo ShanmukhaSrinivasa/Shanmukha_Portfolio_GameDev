@@ -5,7 +5,7 @@ import { Volume2, VolumeX } from 'lucide-react';
 const links = [
   { label: 'About', href: '#about' },
   { label: 'Education', href: '#education' },
-  { label: 'Shipped Titles', href: '#experience' },
+  { label: 'Featured Games', href: '#experience' },
   { label: 'Projects', href: '#projects' },
   { label: 'Technical Skills', href: '#skills' },
   { label: 'Itch.io', href: 'https://shanmukha.itch.io/' },
