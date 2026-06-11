@@ -4,7 +4,7 @@ const education = [
   {
     degree: 'B.Sc Hons. in Game Design and Animation',
     school: 'Arena Animation Jayanagar, Bengaluru',
-    year: '2023 – 2026 (Pursuing)',
+    year: '2023 – 2026',
   },
   {
     degree: 'Diploma in Animation and VFX', // Fixed typo: Animation
