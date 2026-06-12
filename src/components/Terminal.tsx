@@ -111,7 +111,7 @@ const Terminal = () => {
           <div className="text-[11px] md:text-xs leading-relaxed">
             <p>Email: <a href="mailto:shannugopa@gmail.com" className="text-blue-400 hover:underline">shannugopa@gmail.com</a></p>
             <p>GitHub: <a href="https://github.com/ShanmukhaSrinivasa" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">github.com/ShanmukhaSrinivasa</a></p>
-            <p>LinkedIn: <a href="https://www.linkedin.com/in/shanmukha-gopa-1599748a/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">linkedin.com/in/shanmukha-gopa</a></p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/shanmukhasrinivasa/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">linkedin.com/in/shanmukha-gopa</a></p>
           </div>
         );
       default:

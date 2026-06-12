@@ -21,7 +21,7 @@ const Finale = () => {
     },
     {
       icon: Linkedin,
-      href: 'https://www.linkedin.com/in/shanmukha-gopa-1599748a/',
+      href: 'https://www.linkedin.com/in/shanmukhasrinivasa/',
       label: 'LinkedIn',
     },
     {
