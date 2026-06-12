@@ -1,8 +1,11 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { projectsData } from '../data/projectsData';
-import { ArrowLeft, Terminal, Gamepad2, Activity, Loader2 } from 'lucide-react';
+import { ArrowLeft,Terminal,Gamepad2,Activity,Loader2,Clock,Users,Target,Github,} from 'lucide-react';
 import { playClick, playTerminalOpen } from '@/hooks/useSoundEffects';
+import CaseBlock from '@/components/case-study/CaseBlock';
+import CaseList from '@/components/case-study/CaseList';
+import RelatedProjects from "@/components/RelatedProjects";
 
 export const ProjectDetail = () => {
   const { slug } = useParams();
@@ -89,10 +92,75 @@ export const ProjectDetail = () => {
               </div>
             ))}
           </div>
+          <div className="grid md:grid-cols-3 gap-6 mt-10">
+
+          <div className="border-2 border-blue-500/20 bg-[#161e2d] p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Clock className="w-4 h-4 text-blue-500" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-blue-500/60">
+                Development Time
+              </span>
+            </div>
+
+            <p className="text-white font-bold text-lg">
+              {project.developmentTime || "N/A"}
+            </p>
+          </div>
+
+          <div className="border-2 border-blue-500/20 bg-[#161e2d] p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Users className="w-4 h-4 text-blue-500" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-blue-500/60">
+                Team Size
+              </span>
+            </div>
+
+            <p className="text-white font-bold text-lg">
+              {project.teamSize || "Solo Developer"}
+            </p>
+          </div>
+
+          <div className="border-2 border-blue-500/20 bg-[#161e2d] p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Target className="w-4 h-4 text-blue-500" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-blue-500/60">
+                Primary Engine
+              </span>
+            </div>
+
+            <p className="text-white font-bold text-lg">
+              {project.tech[0]}
+            </p>
+          </div>
+
+        </div>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.8fr_1fr] gap-20">
           <section className="space-y-16">
+            {
+              project.videoUrl && (
+                <div className="space-y-4">
+
+                  <div className="flex items-center gap-2 font-mono text-[8px] text-blue-500/40 uppercase tracking-widest">
+                    <Activity size={10} />
+                    Gameplay_Trailer
+                  </div>
+
+                  <div className="aspect-video border-4 border-blue-500 bg-black shadow-[25px_25px_0px_0px_rgba(59,130,246,0.1)]">
+
+                    <iframe
+                      src={project.videoUrl}
+                      title={`${project.title} Trailer`}
+                      className="w-full h-full"
+                      allowFullScreen
+                    />
+
+                  </div>
+
+                </div>
+              )
+            }
             <div className="space-y-6">
               <h3 className="text-blue-400 font-mono text-xs uppercase tracking-[0.4em] font-black italic underline decoration-blue-500/50 underline-offset-8">
                 {project.tagline}
@@ -100,8 +168,54 @@ export const ProjectDetail = () => {
               <p className="text-xl text-slate-400 leading-relaxed font-medium italic">
                 {project.fullDescription}
               </p>
-            </div>
+              {
+              project.problem && (
+                <div className="mt-20 space-y-20">
 
+                  <CaseBlock
+                    title="The Problem"
+                    content={project.problem}
+                  />
+
+                  {project.designGoals && (
+                    <CaseList
+                      title="Design Goals"
+                      items={project.designGoals}
+                    />
+                  )}
+
+                  {project.technicalChallenges && (
+                    <CaseList
+                      title="Technical Challenges"
+                      items={project.technicalChallenges}
+                    />
+                  )}
+
+                  {project.solutions && (
+                    <CaseList
+                      title="Solutions"
+                      items={project.solutions}
+                    />
+                  )}
+
+                  {project.results && (
+                    <CaseList
+                      title="Results"
+                      items={project.results}
+                    />
+                  )}
+
+                  {project.lessonsLearned && (
+                    <CaseList
+                      title="Lessons Learned"
+                      items={project.lessonsLearned}
+                    />
+                  )}
+
+                </div>
+              )
+            }
+            </div>
             <div className="space-y-12">
               {/* DYNAMIC BUILD EMBED: Automatically detects and prioritizes WebGL builds */}
               {project.embedId ? (
@@ -147,6 +261,24 @@ export const ProjectDetail = () => {
           </section>
 
           <aside className="space-y-8">
+            <div className="mb-10">
+
+            <h4 className="font-mono text-[10px] uppercase text-blue-500 tracking-[0.2em] mb-4">
+              Technology Stack
+            </h4>
+
+            <div className="flex flex-wrap gap-2">
+              {project.tech.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-2 py-1 border border-blue-500/20 text-blue-400 text-[9px] font-mono uppercase"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+          </div>
             <div className="border-2 border-blue-500/20 p-8 bg-[#161e2d] sticky top-32 shadow-[10px_10px_0px_0px_rgba(59,130,246,0.05)]">
               <h3 className="font-mono text-[10px] font-black uppercase text-blue-500 mb-8 tracking-[0.2em] flex items-center gap-2">
                 <Terminal size={14} /> Technical_Log
@@ -159,7 +291,6 @@ export const ProjectDetail = () => {
                   </li>
                 ))}
               </ul>
-              
               <a 
                 href={project.liveUrl} 
                 target="_blank" 
@@ -171,6 +302,16 @@ export const ProjectDetail = () => {
                 <Gamepad2 size={18} />
                 <span>Play Game</span>
               </a>
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={playClick}
+                className="mt-4 w-full flex items-center justify-center gap-4 py-5 border-2 border-blue-500 text-blue-400 font-black uppercase text-xs tracking-[0.2em] hover:bg-blue-500 hover:text-white transition-all"
+              >
+                <Github size={18} />
+                <span>View Source</span>
+              </a>
 
               <div className="mt-6 flex items-center justify-between font-mono text-[8px] text-blue-500/30 uppercase tracking-[0.3em]">
                 <span>Status: Optimal</span>
@@ -179,6 +320,7 @@ export const ProjectDetail = () => {
             </div>
           </aside>
         </div>
+        <RelatedProjects currentSlug={project.slug} />
       </main>
     </div>
   );
