@@ -5,6 +5,7 @@ export interface Project {
   tagline: string;
   type: string;
   embedId?: string;
+  showcase?: boolean;
 
   metadata: {
     role: string;
@@ -89,6 +90,7 @@ export const projectsData: Project[] = [
 
     title: 'Arcane Ascent',
     featured: true,
+    showcase: true,
     // embedId: '16255455',
     tagline: 'The Void Tower awaits. The only way out is UP.',
     type: 'Atmospheric Platformer',
@@ -159,6 +161,7 @@ export const projectsData: Project[] = [
     ],
     title: 'Orbit Rogue',
     featured: true,
+    showcase: true,
     embedId:'16321282',
     tagline: 'Stuck in orbit. Destined for glory.',
     type: 'Arcade Roguelite',
@@ -187,7 +190,7 @@ export const projectsData: Project[] = [
     slug: 'dash-and-doom',
     title: 'Dash & Doom',
     featured: true,
-
+    showcase: true,
     tagline: 'Run faster. Survive longer. The Doom never stops.',
 
     type: 'Endless Runner',
@@ -287,7 +290,7 @@ export const projectsData: Project[] = [
     title: 'Last Service',
 
     featured: true,
-
+    showcase: true,
     tagline: 'The station is closed. One final task remains.',
 
     type: '3D Psychological Horror',
