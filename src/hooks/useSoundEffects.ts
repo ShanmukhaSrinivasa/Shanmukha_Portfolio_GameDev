@@ -8,18 +8,37 @@ const getCtx = (): AudioContext | null => {
   if (typeof window === 'undefined') return null;
   if (!ctx) {
     try {
-      ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const AudioCtor =
+        window.AudioContext ||
+        (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      if (!AudioCtor) return null;
+      ctx = new AudioCtor();
     } catch { return null; }
   }
-  if (ctx.state === 'suspended') ctx.resume();
+  if (ctx.state === 'suspended') ctx.resume().catch(() => {});
   return ctx;
 };
 
-let masterVolume = parseFloat(localStorage.getItem('system_volume') || '0.8');
+const VOLUME_KEY = 'system_volume';
+
+const loadVolume = (): number => {
+  try {
+    const v = parseFloat(localStorage.getItem(VOLUME_KEY) ?? '0.8');
+    return Number.isFinite(v) ? Math.max(0, Math.min(1, v)) : 0.8;
+  } catch {
+    return 0.8;
+  }
+};
+
+let masterVolume = loadVolume();
 
 export const setMasterVolume = (v: number) => {
   masterVolume = Math.max(0, Math.min(1, v));
-  localStorage.setItem('system_volume', v.toString());
+  try {
+    localStorage.setItem(VOLUME_KEY, masterVolume.toString());
+  } catch {
+    // Storage unavailable (private mode / blocked) — keep in-memory value.
+  }
 };
 
 export const getMasterVolume = () => masterVolume;

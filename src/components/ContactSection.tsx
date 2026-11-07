@@ -22,10 +22,13 @@ const ContactSection = () => {
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false); // Modal state
+  const [packetId, setPacketId] = useState('');
+  const [sendError, setSendError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSendError(null);
     playClick();
 
     const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -33,25 +36,33 @@ const ContactSection = () => {
     const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
     try {
+      if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+        throw new Error('EmailJS environment variables are not configured.');
+      }
       await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current!, PUBLIC_KEY);
       
       playSuccess();
       setForm({ name: '', email: '', message: '' });
+      setPacketId(Math.random().toString(36).slice(2, 11).toUpperCase());
       setShowSuccess(true); // Trigger custom modal instead of alert
     } catch (error) {
       playError();
       console.error("UPLINK_ERROR:", error);
-      alert("CRITICAL_FAILURE: Packet loss detected in transmission.");
+      setSendError('CRITICAL_FAILURE: Transmission failed. Please try again or email me directly at shannugopa@gmail.com.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const copyEmail = () => {
-    navigator.clipboard.writeText('shannugopa@gmail.com');
-    playPop();
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    navigator.clipboard
+      .writeText('shannugopa@gmail.com')
+      .then(() => {
+        playPop();
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      })
+      .catch(() => playError());
   };
 
   return (
@@ -73,7 +84,7 @@ const ContactSection = () => {
                 <p className="text-[10px] uppercase tracking-[0.2em] text-blue-500/50 mb-1 font-black">Primary Frequency</p>
                 <p className="font-mono text-sm break-all text-white font-bold">shannugopa@gmail.com</p>
               </div>
-              <button onClick={copyEmail} className="p-2 hover:bg-blue-500/10 border border-blue-500/20">
+              <button type="button" onClick={copyEmail} aria-label="Copy email address" className="p-2 hover:bg-blue-500/10 border border-blue-500/20">
                 {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4 text-blue-400" />}
               </button>
             </div>
@@ -121,11 +132,16 @@ const ContactSection = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full group flex items-center justify-center gap-3 px-8 py-4 bg-blue-600 text-white font-mono uppercase tracking-[0.2em] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+            className="w-full group flex items-center justify-center gap-3 px-8 py-4 bg-blue-600 text-white font-mono uppercase tracking-[0.2em] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
           >
             <span className="font-black">{isSubmitting ? 'ESTABLISHING_LINK...' : 'INITIATE_TRANSFER'}</span>
             {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
           </button>
+          {sendError && (
+            <p role="alert" className="font-mono text-xs text-red-400 border-2 border-red-500/40 bg-red-500/10 px-4 py-3">
+              {sendError}
+            </p>
+          )}
         </form>
       </div>
 
@@ -146,7 +162,7 @@ const ContactSection = () => {
                   Signal_Confirmed
                 </h3>
                 <p className="text-blue-200/60 font-mono text-xs uppercase tracking-widest">
-                  Packet ID: {Math.random().toString(36).substr(2, 9).toUpperCase()}
+                  Packet ID: {packetId}
                 </p>
               </div>
 

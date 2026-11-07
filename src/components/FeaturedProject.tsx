@@ -10,8 +10,6 @@ import { playClick } from "@/hooks/useSoundEffects";
 const FeaturedProject = () => {
   const featuredProjects = projectsData.filter((project) => project.showcase);
 
-  console.log(featuredProjects);
-
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {

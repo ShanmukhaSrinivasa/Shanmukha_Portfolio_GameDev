@@ -13,6 +13,7 @@ import {
   playError,
   playClick,
 } from '@/hooks/useSoundEffects';
+import { projectsData } from '@/data/projectsData';
 
 interface CommandOutput {
   id: number;
@@ -101,9 +102,11 @@ const Terminal = () => {
       case 'projects':
         return (
           <div className="flex flex-col gap-1 text-[11px] md:text-xs">
-            <a href="https://shanmukha.itch.io/orbit-rogue" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">1. Orbit Rogue (Boss Rush)</a>
-            <a href="https://shanmukha.itch.io/arcane-ascent" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">2. Arcane Ascent (Platformer)</a>
-            <a href="https://shanmukha.itch.io/pixel-dash" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">3. Pixel Dash (Endless Runner)</a>
+            {projectsData.map((p, i) => (
+              <a key={p.slug} href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                {i + 1}. {p.title} ({p.metadata.genre})
+              </a>
+            ))}
           </div>
         );
       case 'contact':
@@ -111,7 +114,7 @@ const Terminal = () => {
           <div className="text-[11px] md:text-xs leading-relaxed">
             <p>Email: <a href="mailto:shannugopa@gmail.com" className="text-blue-400 hover:underline">shannugopa@gmail.com</a></p>
             <p>GitHub: <a href="https://github.com/ShanmukhaSrinivasa" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">github.com/ShanmukhaSrinivasa</a></p>
-            <p>LinkedIn: <a href="https://www.linkedin.com/in/shanmukhasrinivasa/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">linkedin.com/in/shanmukha-gopa</a></p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/shanmukhasrinivasa/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">linkedin.com/in/shanmukhasrinivasa</a></p>
           </div>
         );
       default:

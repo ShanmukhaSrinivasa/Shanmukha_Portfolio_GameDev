@@ -6,7 +6,7 @@ import { Badge } from './ui/badge';
 import { playClick } from '@/hooks/useSoundEffects';
 
 const ProjectsSection = () => {
-  const featuredProjects = projectsData.filter((p) => p.featured).slice(0, 6);
+  const featuredProjects = projectsData.filter((p) => p.featured);
 
   return (
     <SectionBlock id="projects" title="My Projects">
