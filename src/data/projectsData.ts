@@ -59,7 +59,7 @@ export const projectsData: Project[] = [
       platform: 'Web (Browser)',
     },
 
-    developmentTime: '2 Weeks',
+    developmentTime: '2 Months',
     teamSize: 'Solo Developer',
 
     shortDesc:
@@ -143,7 +143,7 @@ export const projectsData: Project[] = [
       platform: 'Web (Browser)',
     },
 
-    developmentTime: '2 Weeks',
+    developmentTime: '2 Months',
     teamSize: 'Solo Developer',
 
     shortDesc:
