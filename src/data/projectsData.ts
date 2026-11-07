@@ -45,6 +45,175 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
+    slug: 'haunted-hotel-empire',
+    title: 'Haunted Hotel Empire',
+    featured: true,
+    showcase: true,
+    tagline: 'Check in. Never check out.',
+    type: '3D Idle Tycoon',
+
+    metadata: {
+      role: 'Solo Developer',
+      year: '2026',
+      genre: 'Idle / Management Sim',
+      platform: 'Web (Browser)',
+    },
+
+    developmentTime: '2 Weeks',
+    teamSize: 'Solo Developer',
+
+    shortDesc:
+      'A spooky 3D idle tycoon where you build, staff, and upgrade a haunted hotel for ghostly guests, growing passive income and your star rating.',
+
+    fullDescription:
+      'Haunted Hotel Empire is a cozy-spooky management game where players run a hotel for ghosts, witches, and skeletons. Starting with a single room, players earn passive income, build new rooms, hire staff, and unlock themed wings such as the Séance Room, Blood Bar, Laundry, and Garden Wing as their hotel levels up. Guests leave reviews that feed into the hotel\'s star rating, telling players what their hotel is missing, while a guided quest chain teaches each system step by step. The project focuses on a clear, satisfying progression loop, readable isometric 3D presentation, and a touch-friendly UI built for instant play in the browser.',
+
+    problem:
+      'Design an idle tycoon that stays readable and rewarding from the first tap, where each upgrade visibly changes the world and players always know what to do next.',
+
+    designGoals: [
+      'Create a satisfying core loop of earning, building, and upgrading.',
+      'Make progression visible by physically expanding the hotel in 3D.',
+      'Onboard new players with a guided quest chain and contextual hints.',
+      'Use guest reviews and star ratings as meaningful feedback on player choices.',
+      'Deliver a charming spooky theme that feels cozy rather than scary.',
+    ],
+
+    technicalChallenges: [
+      'Balancing an economy of income rates, room costs, and level-gated unlocks.',
+      'Keeping a large isometric 3D scene performant in a browser build.',
+      'Presenting many world-space labels and UI panels without clutter.',
+      'Designing a touch-friendly interface that also works with mouse input.',
+    ],
+
+    solutions: [
+      'Built data-driven room and upgrade definitions to tune costs and unlock levels quickly.',
+      'Implemented a passive income system with timed boosts such as a 2x income multiplier.',
+      'Created a guest review system that converts missing amenities into rating feedback.',
+      'Developed a quest and tutorial system with highlighted UI prompts to guide new players.',
+      'Used world-space labels for build plots, locked areas, and wing unlock requirements.',
+    ],
+
+    results: [
+      'Delivered a complete, instantly playable browser tycoon published on Playgama.',
+      'Created a clear progression path from a single room to a multi-wing hotel.',
+      'Built a reusable framework for economy, quests, and build systems in future management games.',
+    ],
+
+    lessonsLearned: [
+      'Idle games live or die by the pacing of their first few minutes.',
+      'Visible world changes make upgrades feel far more rewarding than numbers alone.',
+      'Player feedback systems like reviews give direction without heavy tutorials.',
+      'Browser builds need performance budgeting from the very start.',
+    ],
+
+    technicalDeepDive: [
+      'Implemented a passive income economy with per-second earnings and level progression.',
+      'Built a grid-based room construction system with costs, locked plots, and hotel-level gates.',
+      'Developed staff and upgrade systems that scale hotel income and guest satisfaction.',
+      'Created a guest review and five-star rating system driven by available rooms and amenities.',
+      'Designed a quest chain with progress tracking and guided UI hints for onboarding.',
+      'Added a timed 2x income boost, photo mode, pause, and audio controls.',
+      'Optimized the isometric 3D scene and UI for smooth browser performance.',
+    ],
+
+    tech: ['Unity', 'C#', 'Idle Economy', 'Build System', 'Quest System', 'WebGL'],
+
+    images: [
+      '/images/haunted-hotel-1.webp',
+      '/images/haunted-hotel-2.webp',
+      '/images/haunted-hotel-3.webp',
+    ],
+
+    githubUrl: 'https://github.com/ShanmukhaSrinivasa',
+    liveUrl: 'https://playgama.ai/play/ght3dmoxtxnwl5',
+  },
+  {
+    slug: 'last-bunker',
+    title: 'Last Bunker',
+    featured: true,
+    showcase: true,
+    tagline: 'Hold the line. Survive the night.',
+    type: '3D Idle Zombie Defense',
+
+    metadata: {
+      role: 'Solo Developer',
+      year: '2026',
+      genre: 'Idle / Tower Defense',
+      platform: 'Web (Browser)',
+    },
+
+    developmentTime: '2 Weeks',
+    teamSize: 'Solo Developer',
+
+    shortDesc:
+      'A 3D idle zombie defense game where you fortify a lone bunker, upgrade your firepower, and unleash abilities to survive escalating nightly hordes.',
+
+    fullDescription:
+      'Last Bunker is an idle zombie defense game where a lone survivor holds out on top of a fortified container bunker as waves of zombies close in each night. The survivor automatically fires at anything that enters their attack radius, while players spend gold earned from kills on upgrades across Firepower, Defense, Utility, and Build trees. Damage, fire rate, crit chance, and crit damage can all be scaled up, and powerful abilities such as Grenade, Molotov, Tesla, and Airstrike unlock as the player levels up. Each night can roll a modifier, like Autumn Winds boosting fire damage, which changes which builds work best. The project focuses on a punchy upgrade loop, readable top-down combat, and quick-to-learn controls with keyboard shortcuts for every upgrade and ability.',
+
+    problem:
+      'Build an idle defense game that feels active and strategic, where every upgrade choice noticeably changes how well the bunker survives the next night.',
+
+    designGoals: [
+      'Create a tight loop of surviving waves, earning gold, and upgrading.',
+      'Make upgrades feel impactful through visible combat changes and damage numbers.',
+      'Offer meaningful build variety through multiple upgrade trees and abilities.',
+      'Keep each night fresh with rotating modifiers.',
+      'Support both mouse and keyboard play with hotkeys for upgrades and abilities.',
+    ],
+
+    technicalChallenges: [
+      'Handling growing numbers of zombies while keeping browser performance smooth.',
+      'Balancing wave difficulty against upgrade costs and stat scaling.',
+      'Designing abilities with distinct roles that unlock at the right pace.',
+      'Keeping the screen readable during busy combat with many effects.',
+    ],
+
+    solutions: [
+      'Implemented a night-based wave spawner that scales enemy count and difficulty.',
+      'Built a radius-based auto-targeting system for the survivor\'s weapon.',
+      'Created data-driven upgrade trees with scaling costs and stat previews (e.g. 6 > 6.8).',
+      'Developed level-gated abilities including area damage, fire, chain lightning, and airstrikes.',
+      'Added nightly modifiers that tweak damage types to encourage different builds.',
+    ],
+
+    results: [
+      'Delivered a complete, instantly playable browser defense game published on Playgama.',
+      'Created a satisfying progression from a lone rifle to a fully upgraded arsenal.',
+      'Built reusable wave, upgrade, and ability systems for future action-idle games.',
+    ],
+
+    lessonsLearned: [
+      'Showing the exact before/after value of an upgrade makes choices easier and more satisfying.',
+      'Small random modifiers add a lot of replay value for little extra content.',
+      'Enemy counts in browser games need careful pooling and performance budgets.',
+      'Hotkeys make an idle game feel much more responsive for engaged players.',
+    ],
+
+    technicalDeepDive: [
+      'Implemented a night/wave system with enemy counters and base health tracking.',
+      'Built auto-targeting combat within a visible attack radius, with floating damage numbers.',
+      'Developed Firepower, Defense, Utility, and Build upgrade trees with scaling gold costs.',
+      'Created crit chance and crit damage stats layered on top of base damage and fire rate.',
+      'Designed four unlockable abilities (Grenade, Molotov, Tesla, Airstrike) with cooldowns.',
+      'Added nightly modifiers such as Autumn Winds that boost specific damage types.',
+      'Implemented game speed control, camera zoom, and keyboard shortcuts (Q/W/E/R, Z/X/C/V).',
+      'Used object pooling for zombies and projectiles to keep browser performance stable.',
+    ],
+
+    tech: ['Unity', 'C#', 'Wave Spawning', 'Upgrade System', 'Object Pooling', 'WebGL'],
+
+    images: [
+      '/images/last-bunker-1.jpg',
+      '/images/last-bunker-2.webp',
+      '/images/last-bunker-3.webp',
+    ],
+
+    githubUrl: 'https://github.com/ShanmukhaSrinivasa',
+    liveUrl: 'https://playgama.ai/play/3pnwa6n5gg6yga',
+  },
+  {
     slug: 'arcane-ascent',
     developmentTime: '2 Weeks',
 
