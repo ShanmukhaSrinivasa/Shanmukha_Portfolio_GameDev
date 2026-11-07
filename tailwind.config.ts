@@ -19,7 +19,19 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['"Inter Variable"', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk Variable"', '"Inter Variable"', 'sans-serif'],
+        mono: ['"JetBrains Mono Variable"', 'ui-monospace', 'monospace'],
+      },
       colors: {
+        surface: {
+          DEFAULT: 'hsl(var(--surface))',
+          2: 'hsl(var(--surface-2))',
+        },
+        line: 'hsl(var(--line))',
+        glow: 'hsl(var(--glow))',
+        term: 'hsl(var(--term))',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

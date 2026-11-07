@@ -2,23 +2,23 @@ import SectionBlock from './SectionBlock';
 import { Gamepad2 } from 'lucide-react';
 
 const AboutSection = () => (
-  <SectionBlock id="about" title="About me">
+  <SectionBlock id="about" eyebrow="03 — About" command="cat about.md" title="About me">
     <div className="flex flex-col md:flex-row items-center md:items-start gap-12">
       {/* New Styled Avatar Container */}
       <div className="relative w-64 h-64 flex-shrink-0 group">
         {/* The Blue "Ghost" Shadow */}
-        <div className="absolute inset-0 border-2 border-blue-500 bg-blue-500/10 translate-x-4 translate-y-4 transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
+        <div className="absolute inset-0 border border-line bg-blue-500/10 translate-x-4 translate-y-4 transition-transform duration-300 group- group-"></div>
         
         {/* The Image Frame */}
-        <div className="relative w-full h-full border-2 border-blue-500 overflow-hidden bg-[#161e2d]">
+        <div className="relative w-full h-full border border-line overflow-hidden bg-surface">
           <img 
             src="/images/avatar.webp" 
             alt="Shanmukha Srinivasa"
             className="w-full h-full object-cover filter grayscale contrast-125 hover:grayscale-0 transition-all duration-500"
           />
           {/* Visible Overlay Text (The "Alt Text" replacement) */}
-          <div className="absolute inset-x-0 bottom-0 bg-blue-600 py-1.5 text-center translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
-            <span className="font-mono text-[10px] font-black text-white tracking-[0.3em] uppercase">
+          <div className="absolute inset-x-0 bottom-0 bg-blue-600 py-1.5 text-center translate-y-full group- transition-transform duration-300 ease-out">
+            <span className="font-mono text-[10px] font-semibold text-foreground tracking-[0.3em] uppercase">
               SHANMUKHA.EXE
             </span>
           </div>
@@ -27,7 +27,7 @@ const AboutSection = () => (
         {/* The "Available" Status Badge - Fixed position without blue background */}
         <div className="absolute -bottom-5 -right-2 bg-black border-2 border-white flex items-center gap-2 px-3 py-1 z-10">
           <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-          <span className="font-mono text-[10px] font-black text-white tracking-widest uppercase">
+          <span className="font-mono text-[10px] font-semibold text-foreground tracking-widest uppercase">
             Available
           </span>
         </div>
@@ -48,7 +48,7 @@ const AboutSection = () => (
           href="https://shanmukha.itch.io/"
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative inline-flex items-center gap-3 px-6 py-3 border-2 border-blue-500 bg-transparent text-blue-400 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(59,130,246,0.5)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-blue-600 hover:text-white"
+          className="group relative inline-flex items-center gap-3 px-6 py-3 border border-line bg-transparent text-blue-400 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:bg-surface-2 hover:text-foreground"
         >
           <Gamepad2 className="w-4 h-4" />
           <span>Play My Games</span>

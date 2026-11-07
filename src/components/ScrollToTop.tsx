@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
+import { useLenis } from 'lenis/react';
 import { playWhoosh } from '@/hooks/useSoundEffects';
 
 const ScrollToTop = () => {
   const [visible, setVisible] = useState(false);
   const [progress, setProgress] = useState(0);
+  const lenis = useLenis();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,7 +19,7 @@ const ScrollToTop = () => {
       setVisible(scrollTop > 400);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -33,9 +35,10 @@ const ScrollToTop = () => {
     <button
       onClick={() => {
         playWhoosh();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (lenis) lenis.scrollTo(0, { duration: 1.2 });
+        else window.scrollTo({ top: 0, behavior: 'smooth' });
       }}
-      className={`fixed bottom-6 left-6 z-50 group transition-all duration-500 ease-out ${
+      className={`fixed bottom-6 left-6 z-50 group md:bottom-11 transition-all duration-500 ease-out ${
         visible
           ? 'opacity-100 translate-y-0'
           : 'opacity-0 translate-y-8 pointer-events-none'
@@ -71,7 +74,7 @@ const ScrollToTop = () => {
 
         {/* Icon */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <ArrowUp className="w-5 h-5 text-foreground/80 group-hover:-translate-y-0.5 transition-transform duration-300" />
+          <ArrowUp className="w-5 h-5 text-foreground/80 group- transition-transform duration-300" />
         </div>
       </div>
     </button>

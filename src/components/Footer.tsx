@@ -49,7 +49,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full bg-[#0f172a] border-t-4 border-blue-600 pt-16 pb-32 px-6 md:pb-24">
+    <footer className="w-full bg-background border-t-4 border-blue-600 pt-16 pb-32 px-6 md:pb-24">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           
@@ -70,7 +70,7 @@ const Footer = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 border-2 border-blue-500/30 text-blue-400 bg-[#161e2d] hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(59,130,246,0.2)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
+                  className="p-3 border-2 border-blue-500/30 text-blue-400 bg-surface hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(59,130,246,0.2)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
                   aria-label={link.label}
                 >
                   <link.icon className="w-5 h-5" />
@@ -105,7 +105,7 @@ const Footer = () => {
             </h3>
             <button
               onClick={scrollToTop}
-              className="group flex items-center gap-3 px-6 py-3 border-2 border-blue-500 bg-[#161e2d] text-blue-400 font-mono text-xs font-black uppercase tracking-widest transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(59,130,246,0.3)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] active:bg-blue-600 active:text-white"
+              className="group flex items-center gap-3 px-6 py-3 border-2 border-blue-500 bg-surface text-blue-400 font-mono text-xs font-black uppercase tracking-widest transition-all duration-300 shadow-[6px_6px_0px_0px_rgba(59,130,246,0.3)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] active:bg-blue-600 active:text-white"
             >
               UP_LINK{' '}
               <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />

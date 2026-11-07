@@ -14,6 +14,7 @@ import {
   playClick,
 } from '@/hooks/useSoundEffects';
 import { projectsData } from '@/data/projectsData';
+import { OPEN_TERMINAL } from '@/lib/events';
 
 interface CommandOutput {
   id: number;
@@ -55,7 +56,8 @@ const Terminal = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      // Ctrl+` (or Cmd+`) toggles the terminal; Ctrl+K is the command menu.
+      if ((e.metaKey || e.ctrlKey) && (e.key === '`' || e.code === 'Backquote')) {
         e.preventDefault();
         setIsOpen((prev) => {
           const next = !prev;
@@ -70,8 +72,17 @@ const Terminal = () => {
       }
     };
 
+    const handleOpenRequest = () => {
+      playTerminalOpen();
+      setIsOpen(true);
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener(OPEN_TERMINAL, handleOpenRequest);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener(OPEN_TERMINAL, handleOpenRequest);
+    };
   }, [isOpen]);
 
   const getCommandResponse = (cmd: string): React.ReactNode | null => {
@@ -172,13 +183,13 @@ const Terminal = () => {
 
   if (!isOpen) {
     return (
-      <div className="fixed bottom-8 right-8 z-50 group">
+      <div className="fixed bottom-8 right-8 z-50 group md:bottom-12">
         <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-blue-600 text-white text-[9px] font-black uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-          EXEC (CTRL+K)
+          EXEC (CTRL+`)
         </div>
         <button
           onClick={() => { playTerminalOpen(); setIsOpen(true); }}
-          className="p-2.5 bg-[#161e2d] border-2 border-blue-500 text-blue-400 shadow-[4px_4px_0px_0px_rgba(59,130,246,0.5)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-300"
+          className="p-2.5 bg-surface border-2 border-blue-500 text-blue-400 shadow-[4px_4px_0px_0px_rgba(59,130,246,0.5)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-300"
           aria-label="Open Terminal"
         >
           <TerminalIcon className="w-5 h-5" />
@@ -195,7 +206,7 @@ const Terminal = () => {
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-4 py-2 border-b-2 border-blue-500/20 bg-[#161e2d]">
+        <div className="flex items-center justify-between px-4 py-2 border-b-2 border-blue-500/20 bg-surface">
           <div className="flex items-center gap-3">
             <div className="w-2.5 h-2.5 bg-red-500/80 rounded-full cursor-pointer hover:bg-red-500" onClick={() => { playTerminalClose(); setIsOpen(false); }} />
             <div className="w-2.5 h-2.5 bg-yellow-500/80 rounded-full cursor-pointer hover:bg-yellow-500" onClick={() => setIsMaximized(!isMaximized)} />

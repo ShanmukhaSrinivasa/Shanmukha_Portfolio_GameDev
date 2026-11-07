@@ -25,6 +25,17 @@ export interface Project {
 
   videoUrl?: string;
 
+  /** Short muted gameplay loop (MP4/WebM in /public/videos) that plays when a card is hovered. */
+  previewVideo?: string;
+
+  /** Optional real excerpt from the game's code, shown on the case-study page. */
+  codeSnippet?: {
+    title: string;
+    language: string;
+    code: string;
+    caption?: string;
+  };
+
   // CASE STUDY DATA
 
   developmentTime?: string;

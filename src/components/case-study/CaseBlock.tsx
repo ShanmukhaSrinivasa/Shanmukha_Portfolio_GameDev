@@ -3,18 +3,14 @@ interface CaseBlockProps {
   content: string;
 }
 
-const CaseBlock = ({ title, content }: CaseBlockProps) => {
-  return (
-    <div className="border-l-4 border-blue-500 pl-6 py-2">
-      <h3 className="font-mono text-blue-400 text-xs uppercase tracking-[0.4em] font-black mb-4">
-        {title}
-      </h3>
-
-      <p className="text-slate-300 leading-relaxed text-base">
-        {content}
-      </p>
-    </div>
-  );
-};
+/** A single statement, set large — used for "The problem". */
+const CaseBlock = ({ title, content }: CaseBlockProps) => (
+  <div className="max-w-4xl">
+    <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground">{title}</h3>
+    <p className="mt-6 font-display text-2xl font-medium leading-snug tracking-[-0.02em] text-foreground md:text-4xl">
+      {content}
+    </p>
+  </div>
+);
 
 export default CaseBlock;

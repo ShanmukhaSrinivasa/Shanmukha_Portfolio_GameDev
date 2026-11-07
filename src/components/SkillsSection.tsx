@@ -69,23 +69,23 @@ const skillCategories = [
 
 const SkillsSection = () => {
   return (
-    <SectionBlock id="skills" title="Technical Arsenal">
+    <SectionBlock id="skills" eyebrow="05 — Toolkit" command="neofetch --skills" title="Technical arsenal" wide>
       <div className="flex flex-col gap-16">
         {/* Skill Modules */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillCategories.map((category, idx) => (
             <div
               key={category.title}
-              className="group border-2 border-blue-500/30 p-6 bg-[#161e2d] hover:-translate-y-2 hover:border-blue-500 hover:shadow-[8px_8px_0px_0px_rgba(59,130,246,0.5)] transition-all duration-300 relative"
+              className="group border border-line p-6 bg-surface hover:border-primary/60 transition-all duration-300 relative"
               style={{
                 animationDelay: `${idx * 100}ms`,
               }}
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 border-2 border-blue-500 bg-blue-500/20 text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                <div className="p-2 border border-line bg-blue-500/20 text-blue-400 group-hover:bg-blue-500 group-hover:text-foreground transition-colors">
                   {category.icon}
                 </div>
-                <h3 className="font-mono text-sm font-black uppercase tracking-widest text-white">
+                <h3 className="font-mono text-sm font-semibold uppercase tracking-widest text-foreground">
                   {category.title}
                 </h3>
               </div>
@@ -94,7 +94,7 @@ const SkillsSection = () => {
                 {category.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-2 py-1 border border-blue-500/20 text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider hover:border-blue-400 hover:bg-blue-400/10 hover:text-blue-400 transition-all cursor-default"
+                    className="px-2 py-1 border border-line text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-wider hover:border-primary/60 hover:bg-blue-400/10 hover:text-blue-400 transition-all cursor-default"
                   >
                     {skill}
                   </span>
@@ -104,9 +104,9 @@ const SkillsSection = () => {
           ))}
 
           {/* Final "Load" Card */}
-          <div className="border-2 border-blue-500/20 p-6 bg-[#0f172a] flex flex-col items-center justify-center text-center opacity-50 hover:opacity-100 transition-all group">
+          <div className="border border-line p-6 bg-background flex flex-col items-center justify-center text-center opacity-50 hover:opacity-100 transition-all group">
             <Terminal className="w-8 h-8 mb-4 text-blue-500/40 group-hover:text-blue-500 transition-colors animate-pulse" />
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] font-black text-slate-500">
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] font-semibold text-muted-foreground/70">
               // Syncing_Knowledge...
               <br />
               // 30+_Games_Prototyped
@@ -115,7 +115,7 @@ const SkillsSection = () => {
         </div>
 
         {/* Activity Section */}
-        <div className="w-full pt-12 border-t-2 border-blue-500/20 border-dashed">
+        <div className="w-full pt-12 border-t border-line">
           <div className="flex flex-col gap-8">
             <div className="flex items-center gap-4">
               <h3 className="text-sm font-mono font-bold uppercase tracking-[0.3em] flex items-center gap-3 text-blue-400">
@@ -124,7 +124,7 @@ const SkillsSection = () => {
               </h3>
               <div className="h-[1px] flex-1 bg-blue-500/20"></div>
             </div>
-            <div className="bg-[#161e2d] p-6 border-2 border-blue-500/20 rounded-sm">
+            <div className="bg-surface p-6 border border-line">
                <GithubGraph />
             </div>
           </div>

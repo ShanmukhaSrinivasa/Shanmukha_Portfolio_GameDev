@@ -9,10 +9,11 @@ import ContactSection from '@/components/ContactSection';
 import ScrollToTop from '@/components/ScrollToTop';
 import Terminal from '@/components/Terminal';
 import Finale from '@/components/Finale';
+import StatusBar from '@/components/StatusBar';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-[#0f172a] text-slate-200">
+    <div className="min-h-screen text-foreground">
       <Navbar />
       <ScrollToTop />
       <Terminal />
@@ -23,7 +24,8 @@ const Index = () => {
       <EducationSection />
       <SkillsSection />
       <ContactSection />
-      <Finale /> 
+      <Finale />
+      <StatusBar />
     </div>
   );
 };

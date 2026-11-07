@@ -1,87 +1,145 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+import { Search } from 'lucide-react';
+import { useLenis } from 'lenis/react';
 import { playClick } from '@/hooks/useSoundEffects';
 import MuteToggle from './MuteToggle';
+import { OPEN_COMMAND_MENU } from '@/lib/events';
 
 const links = [
+  { label: 'Projects', href: '#projects' },
   { label: 'About', href: '#about' },
   { label: 'Education', href: '#education' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Technical Skills', href: '#skills' },
-  { label: 'Itch.io', href: 'https://shanmukha.itch.io/' },
+  { label: 'Skills', href: '#skills' },
   { label: 'Contact', href: '#contact' },
+  { label: 'itch.io', href: 'https://shanmukha.itch.io/' },
 ];
+
+const external = (href: string) =>
+  href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+
+const openCommandMenu = () => window.dispatchEvent(new Event(OPEN_COMMAND_MENU));
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [isMac, setIsMac] = useState(true);
+  const lenis = useLenis();
+
+  useEffect(() => {
+    setIsMac(/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent));
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 py-6 bg-background/80 backdrop-blur-sm border-b border-blue-500/5">
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        
-        {/* Placeholder for left-side balance if needed, or just spacers */}
-        <div className="w-10 hidden md:block" />
+    <nav
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
+        scrolled || open ? 'border-b border-line bg-background/75 backdrop-blur-md' : 'border-b border-transparent'
+      }`}
+    >
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
+        <a
+          href="#top"
+          onClick={(e) => {
+            e.preventDefault();
+            playClick();
+            if (lenis) lenis.scrollTo(0);
+            else window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="font-display text-sm font-bold tracking-tight text-foreground"
+          aria-label="Back to top"
+        >
+          Shanmukha<span className="text-primary">.</span>
+        </a>
 
-        {/* Desktop Navigation - Centered */}
-        <div className="hidden md:flex items-center justify-center gap-0 flex-grow">
-          {links.map((link, i) => (
-            <span key={link.label} className="flex items-center">
-              <a
-                href={link.href}
-                className="nav-link px-4 py-1 font-mono text-[10px] uppercase tracking-widest text-slate-400 hover:text-blue-500 transition-colors"
-                onClick={playClick}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              >
-                {link.label}
-              </a>
-              {i < links.length - 1 && (
-                <span className="text-foreground/20 text-xs">|</span>
-              )}
-            </span>
+        {/* Desktop links */}
+        <div className="hidden items-center gap-1 md:flex">
+          {links.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={playClick}
+              {...external(link.href)}
+              className="px-3 py-2 text-[13px] text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {link.label}
+            </a>
           ))}
         </div>
 
-        {/* System Audio Toggle - Right Aligned */}
-        <div className="hidden md:flex items-center justify-end w-10">
-          <MuteToggle />
-        </div>
-
-        {/* Mobile Toggle */}
-        <div className="md:hidden flex justify-between w-full items-center">
+        <div className="flex items-center gap-2">
           <button
+            type="button"
             onClick={() => {
               playClick();
-              setOpen(!open);
+              openCommandMenu();
             }}
-            className="nav-link font-mono text-[10px] uppercase tracking-widest text-blue-500"
+            className="hidden items-center gap-2 border border-line px-2.5 py-1.5 text-[12px] text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground sm:flex"
+            aria-label="Open command menu"
           >
-            {open ? '[ Close ]' : '[ Menu ]'}
+            <Search size={13} />
+            Search
+            <kbd className="font-mono text-[10px] text-muted-foreground/70">{isMac ? '⌘K' : 'Ctrl K'}</kbd>
           </button>
-          
-          <MuteToggle size={18} />
+          <MuteToggle size={15} />
+          <button
+            type="button"
+            onClick={() => {
+              playClick();
+              setOpen((o) => !o);
+            }}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground md:hidden"
+          >
+            {open ? 'Close' : 'Menu'}
+          </button>
         </div>
-
-        {/* Mobile Menu */}
-        {open && (
-          <div className="md:hidden absolute top-full left-0 right-0 flex flex-col items-center gap-4 py-8 bg-[#0f172a] border-b border-blue-500/10 animate-in slide-in-from-top-4">
-            {links.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="nav-link font-mono text-[10px] uppercase tracking-widest text-slate-300"
-                onClick={() => {
-                  playClick();
-                  setOpen(false);
-                }}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-        )}
       </div>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden border-t border-line md:hidden"
+          >
+            <div className="flex flex-col px-6 py-4">
+              {links.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  {...external(link.href)}
+                  onClick={() => {
+                    playClick();
+                    setOpen(false);
+                  }}
+                  className="border-b border-line py-4 font-display text-2xl font-semibold tracking-tight text-foreground last:border-b-0"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  openCommandMenu();
+                }}
+                className="mt-4 flex items-center gap-2 text-sm text-muted-foreground"
+              >
+                <Search size={14} /> Search everything
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

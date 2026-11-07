@@ -32,8 +32,20 @@ const loadVolume = (): number => {
 
 let masterVolume = loadVolume();
 
+type VolumeListener = (volume: number) => void;
+const volumeListeners = new Set<VolumeListener>();
+
+/** Subscribe to volume changes (e.g. to keep several mute buttons in sync). */
+export const subscribeVolume = (listener: VolumeListener) => {
+  volumeListeners.add(listener);
+  return () => {
+    volumeListeners.delete(listener);
+  };
+};
+
 export const setMasterVolume = (v: number) => {
   masterVolume = Math.max(0, Math.min(1, v));
+  volumeListeners.forEach((l) => l(masterVolume));
   try {
     localStorage.setItem(VOLUME_KEY, masterVolume.toString());
   } catch {

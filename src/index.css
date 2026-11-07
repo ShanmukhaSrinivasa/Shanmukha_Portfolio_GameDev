@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,13 +5,20 @@
 
 @layer base {
   :root {
-    --background: 222 47% 11%;
+    /* Core palette. Every colour on the site should come from these tokens. */
+    --background: 223 45% 7%;
+    --surface: 222 38% 10.5%;
+    --surface-2: 221 34% 13.5%;
+    --line: 218 32% 19%;
+    --glow: 217 91% 60%;
+    --term: 142 69% 58%;      /* phosphor green for prompts and OK states */
+
     --foreground: 210 40% 98%;
 
-    --card: 222 47% 11%;
+    --card: 222 38% 10.5%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 11%;
+    --popover: 222 38% 10.5%;
     --popover-foreground: 210 40% 98%;
 
     /* Neon Blue Primary Buttons */
@@ -34,7 +40,7 @@
     --destructive-foreground: 210 40% 98%;
 
     /* Subtle borders so they blend into the dark theme */
-    --border: 217 33% 17%;
+    --border: 218 32% 19%;
     --input: 217 33% 17%;
     --ring: 217 91% 60%;
 
@@ -57,27 +63,140 @@
   }
 
   html, body, #root {
-    background-color: #0f172a !important;
-    color: #e2e8f0 !important;
-    font-family: 'Inter', sans-serif;
-    scroll-behavior: smooth;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  /* Guard against sub-pixel horizontal overflow on small screens. */
+  html, body { overflow-x: clip; }
+
+  body {
+    @apply font-sans antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: hsl(var(--glow) / 0.35);
+    color: hsl(var(--foreground));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--glow));
+    outline-offset: 3px;
+  }
+
+  /* Lenis smooth scrolling */
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+  .lenis.lenis-stopped { overflow: hidden; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html:not(.lenis) { scroll-behavior: smooth; }
   }
 }
 
 @layer utilities {
   .heading-brutal {
-    @apply font-black tracking-tighter leading-none text-foreground;
+    @apply font-display font-bold tracking-[-0.04em] leading-none text-foreground;
   }
 
   .section-title {
-    @apply font-black tracking-tighter leading-none text-foreground;
-    font-size: clamp(3rem, 8vw, 7rem);
+    @apply font-mono font-bold tracking-[-0.06em] leading-[0.95] text-foreground;
+    font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+  }
+
+  /* Terminal accents */
+  .text-term { color: hsl(var(--term)); }
+  .glow-text { text-shadow: 0 0 18px hsl(var(--glow) / 0.55), 0 0 2px hsl(var(--glow) / 0.8); }
+  .glow-term { text-shadow: 0 0 14px hsl(var(--term) / 0.5); }
+
+  .cursor-block {
+    display: inline-block;
+    width: 0.55em;
+    height: 0.9em;
+    margin-left: 0.08em;
+    vertical-align: -0.05em;
+    background: hsl(var(--glow));
+    box-shadow: 0 0 12px hsl(var(--glow) / 0.7);
+    animation: cursor-blink 1.05s steps(1) infinite;
+  }
+  @keyframes cursor-blink { 50% { opacity: 0; } }
+
+  /* CRT scanlines + vignette over the page (kept faint so text stays crisp) */
+  .crt-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 61;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.025) 0px,
+        rgba(255, 255, 255, 0.025) 1px,
+        transparent 1px,
+        transparent 3px
+      ),
+      radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.35) 100%);
+  }
+  .crt-overlay::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 18vh;
+    top: -20vh;
+    background: linear-gradient(to bottom, transparent, hsl(var(--glow) / 0.035), transparent);
+    animation: crt-roll 9s linear infinite;
+  }
+  @keyframes crt-roll { to { transform: translateY(140vh); } }
+
+  .grid-pan { animation: grid-pan 18s linear infinite; }
+  @keyframes grid-pan { to { background-position: 64px 64px, 64px 64px; } }
+
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.3em] text-primary;
   }
 
   .body-text {
-    @apply text-foreground/80 leading-relaxed font-light;
-    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    @apply text-muted-foreground leading-relaxed;
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
   }
+
+  /* Film grain over the whole page */
+  .grain {
+    position: fixed;
+    inset: -50%;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  /* Soft light that follows the pointer (set --mx / --my from JS) */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 300ms ease;
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 50%),
+      hsl(var(--glow) / 0.14),
+      transparent 60%
+    );
+  }
+  .spotlight:hover::before { opacity: 1; }
+
+  .hairline { @apply border-line; }
 
   .nav-link {
     @apply uppercase text-xs tracking-[0.2em] text-foreground hover:text-foreground/70 font-medium transition-colors duration-300;
@@ -151,5 +270,20 @@
 
   .animate-marquee-reverse {
     animation: marquee 60s linear infinite reverse;
+  }
+}
+
+/* Respect the visitor's reduced-motion setting for CSS-driven animation. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse,
+  .animate-pulse,
+  .animate-ping,
+  .animate-bounce,
+  .animate-heartbeat,
+  .cursor-block,
+  .grid-pan,
+  .crt-overlay::after {
+    animation: none !important;
   }
 }

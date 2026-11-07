@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
-import { playClick, getMasterVolume, setMasterVolume } from '@/hooks/useSoundEffects';
+import { playClick, getMasterVolume, setMasterVolume, subscribeVolume } from '@/hooks/useSoundEffects';
 
 const DEFAULT_VOLUME = 0.8;
 
@@ -12,11 +12,11 @@ interface MuteToggleProps {
 /** Sound on/off button. The choice is saved, so it carries across pages and visits. */
 const MuteToggle = ({ size = 16, className = '' }: MuteToggleProps) => {
   const [isMuted, setIsMuted] = useState(() => getMasterVolume() === 0);
+  useEffect(() => subscribeVolume((v) => setIsMuted(v === 0)), []);
 
   const toggle = () => {
     const nextMuted = !isMuted;
     setMasterVolume(nextMuted ? 0 : DEFAULT_VOLUME);
-    setIsMuted(nextMuted);
     if (!nextMuted) playClick();
   };
 
@@ -29,7 +29,7 @@ const MuteToggle = ({ size = 16, className = '' }: MuteToggleProps) => {
       aria-label={label}
       aria-pressed={isMuted}
       title={label}
-      className={`p-2 border border-blue-500/30 text-blue-400 hover:text-white hover:border-blue-500 transition-colors ${className}`}
+      className={`p-2 border border-line text-muted-foreground hover:text-foreground hover:border-primary/60 transition-colors ${className}`}
     >
       {isMuted ? <VolumeX size={size} /> : <Volume2 size={size} />}
     </button>
