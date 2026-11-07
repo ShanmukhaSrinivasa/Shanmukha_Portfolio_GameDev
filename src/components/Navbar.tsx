@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { playClick, getMasterVolume, setMasterVolume } from '@/hooks/useSoundEffects';
-import { Volume2, VolumeX } from 'lucide-react';
+import { playClick } from '@/hooks/useSoundEffects';
+import MuteToggle from './MuteToggle';
 
 const links = [
   { label: 'About', href: '#about' },
@@ -13,16 +13,6 @@ const links = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  // Track if system is muted based on the current master volume
-  const [isMuted, setIsMuted] = useState(getMasterVolume() === 0);
-
-  const toggleMute = () => {
-    const newVolume = isMuted ? 0.8 : 0;
-    setMasterVolume(newVolume);
-    setIsMuted(!isMuted);
-    // Play a click only if we are unmuting
-    if (newVolume > 0) playClick();
-  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 py-6 bg-background/80 backdrop-blur-sm border-b border-blue-500/5">
@@ -53,13 +43,7 @@ const Navbar = () => {
 
         {/* System Audio Toggle - Right Aligned */}
         <div className="hidden md:flex items-center justify-end w-10">
-          <button 
-            onClick={toggleMute}
-            className="text-blue-500/40 hover:text-blue-500 transition-colors p-2"
-            title={isMuted ? "Unmute System" : "Mute System"}
-          >
-            {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-          </button>
+          <MuteToggle />
         </div>
 
         {/* Mobile Toggle */}
@@ -74,9 +58,7 @@ const Navbar = () => {
             {open ? '[ Close ]' : '[ Menu ]'}
           </button>
           
-          <button onClick={toggleMute} className="text-blue-500/40 p-2">
-            {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-          </button>
+          <MuteToggle size={18} />
         </div>
 
         {/* Mobile Menu */}

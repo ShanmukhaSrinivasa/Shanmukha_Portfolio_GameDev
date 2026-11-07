@@ -121,7 +121,7 @@ const HeroSection = () => {
         <p className="font-mono text-xs text-foreground/60 leading-relaxed font-medium">
           // portfolio.cs
           <br />
-          // version: 1.0.0
+          // version: 1.0.4
           <br />
           // status: early_access
           <br />

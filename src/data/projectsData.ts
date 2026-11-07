@@ -205,7 +205,7 @@ export const projectsData: Project[] = [
     tech: ['Unity', 'C#', 'Wave Spawning', 'Upgrade System', 'Object Pooling', 'WebGL'],
 
     images: [
-      '/images/last-bunker-1.jpg',
+      '/images/last-bunker-1.webp',
       '/images/last-bunker-2.webp',
       '/images/last-bunker-3.webp',
     ],
@@ -280,7 +280,7 @@ export const projectsData: Project[] = [
       'Built modular level components that support vertical puzzle and traversal-based gameplay design.'
     ],
     tech: ['Unity', 'C#', 'HLSL', '2D Physics'],
-    images: ['/images/arcane-1.jpg', '/images/arcane-2.jpg', '/images/arcane-3.jpg'],
+    images: ['/images/arcane-1.webp', '/images/arcane-2.webp', '/images/arcane-3.webp'],
     githubUrl: 'https://github.com/ShanmukhaSrinivasa',
     liveUrl: 'https://shanmukha.itch.io/arcane-ascent',
     videoUrl: "https://www.youtube.com/embed/yJryDfhwSu0?si=W8NnDO8f3S8j84Ei"
@@ -350,7 +350,7 @@ export const projectsData: Project[] = [
       'Optimized browser performance for high-density projectile scenes.'
     ],
     tech: ['Unity', 'C#', 'Roguelite Logic', 'AI State Machines'],
-    images: ['/images/orbit-rogue-hero.jpg', '/images/orbit-rogue-shop.jpg', '/images/orbit-rogue-boss.jpg'],
+    images: ['/images/orbit-rogue-hero.webp', '/images/orbit-rogue-shop.webp', '/images/orbit-rogue-boss.webp'],
     githubUrl: 'https://github.com/ShanmukhaSrinivasa',
     liveUrl: 'https://shanmukha.itch.io/orbit-rogue',
     videoUrl: "https://www.youtube.com/embed/A2VvaAXCKpo?si=VMz3rReXlMNNMuJE"
@@ -442,9 +442,9 @@ export const projectsData: Project[] = [
     ],
 
     images: [
-    '/images/pixel-dash-1.jpg',
-    '/images/pixel-dash-2.jpg',
-    '/images/pixel-dash-3.jpg'
+    '/images/pixel-dash-1.webp',
+    '/images/pixel-dash-2.webp',
+    '/images/pixel-dash-3.webp'
     ],
 
     githubUrl: 'https://github.com/ShanmukhaSrinivasa',
@@ -544,9 +544,9 @@ export const projectsData: Project[] = [
     ],
 
     images: [
-    '/images/last-service-1.jpg',
-    '/images/last-service-2.jpg',
-    '/images/last-service-3.jpg'
+    '/images/last-service-1.webp',
+    '/images/last-service-2.webp',
+    '/images/last-service-3.webp'
     ],
 
     githubUrl: 'https://github.com/ShanmukhaSrinivasa',
@@ -645,9 +645,9 @@ export const projectsData: Project[] = [
     ],
 
     images: [
-    '/images/zombie-rush-1.jpg',
-    '/images/zombie-rush-2.jpg',
-    '/images/zombie-rush-3.jpg'
+    '/images/zombie-rush-1.webp',
+    '/images/zombie-rush-2.webp',
+    '/images/zombie-rush-3.webp'
     ],
 
     githubUrl: 'https://github.com/ShanmukhaSrinivasa',
@@ -723,9 +723,9 @@ export const projectsData: Project[] = [
   ],
   tech: ['Unity', 'C#', 'UI Toolkit', 'Algorithm Design'],
   images: [
-    '/images/word-hunter-1.jpg',
-    '/images/word-hunter-2.jpg', 
-    '/images/word-hunter-3.jpg'
+    '/images/word-hunter-1.webp',
+    '/images/word-hunter-2.webp', 
+    '/images/word-hunter-3.webp'
   ],
   githubUrl: 'https://github.com/ShanmukhaSrinivasa',
   liveUrl: 'https://shanmukha.itch.io/word-hunter'
@@ -799,9 +799,9 @@ export const projectsData: Project[] = [
   ],
   tech: ['Unity', 'C#', 'Photon PUN 2', 'Network Architecture'],
   images: [
-    '/images/tic-tac-toe-1.jpg',
-    '/images/tic-tac-toe-2.jpg', 
-    '/images/tic-tac-toe-3.jpg'
+    '/images/tic-tac-toe-1.webp',
+    '/images/tic-tac-toe-2.webp', 
+    '/images/tic-tac-toe-3.webp'
   ],
   githubUrl: 'https://github.com/ShanmukhaSrinivasa',
   liveUrl: 'https://shanmukha.itch.io/tic-tac-toe-online-battle-of-the-board'
@@ -875,9 +875,9 @@ export const projectsData: Project[] = [
   ],
   tech: ['Unity','C#','Object Pooling','2D Physics','Performance Optimization'],
   images: [
-    '/images/clicky-crates-1.jpg', 
-    '/images/clicky-crates-2.jpg',
-    '/images/clicky-crates-3.jpg'
+    '/images/clicky-crates-1.webp', 
+    '/images/clicky-crates-2.webp',
+    '/images/clicky-crates-3.webp'
   ],
   githubUrl: 'https://github.com/ShanmukhaSrinivasa',
   liveUrl: 'https://shanmukha.itch.io/clicky-crates'

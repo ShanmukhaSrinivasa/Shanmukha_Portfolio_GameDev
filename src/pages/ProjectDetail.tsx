@@ -6,26 +6,29 @@ import { playClick, playTerminalOpen } from '@/hooks/useSoundEffects';
 import CaseBlock from '@/components/case-study/CaseBlock';
 import CaseList from '@/components/case-study/CaseList';
 import RelatedProjects from "@/components/RelatedProjects";
+import MuteToggle from '@/components/MuteToggle';
+
+// The boot splash plays only on the first project opened per visit,
+// so browsing between projects afterwards is instant.
+const BOOT_MS = 700;
+let hasBooted = false;
 
 export const ProjectDetail = () => {
   const { slug } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => !hasBooted);
   
   // Data-Safety Check: Finding the project based on the URL slug
   const project = projectsData.find(p => p.slug === slug);
 
   useEffect(() => {
-    // Reset system position and trigger boot sequence
     window.scrollTo(0, 0);
-    setIsLoading(true);
-    
-    // Play system boot synthesis
     playTerminalOpen();
 
+    if (hasBooted) return;
     const timer = setTimeout(() => {
+      hasBooted = true;
       setIsLoading(false);
-    }, 1200);
-
+    }, BOOT_MS);
     return () => clearTimeout(timer);
   }, [slug]);
 
@@ -68,9 +71,12 @@ export const ProjectDetail = () => {
   return (
     <div className="min-h-screen bg-[#0f172a] text-white selection:bg-blue-500/30 animate-in fade-in duration-1000">
       <nav className="p-6 border-b-2 border-blue-500/10 bg-[#161e2d] sticky top-0 z-50 backdrop-blur-md">
-        <Link to="/" onClick={playClick} className="flex items-center gap-2 font-mono text-[14px] text-blue-400 uppercase tracking-[0.2em] hover:text-white transition-all">
-          <ArrowLeft size={14} /> Back_to_Dashboard
-        </Link>
+        <div className="flex items-center justify-between">
+          <Link to="/" onClick={playClick} className="flex items-center gap-2 font-mono text-[14px] text-blue-400 uppercase tracking-[0.2em] hover:text-white transition-all">
+            <ArrowLeft size={14} /> Back_to_Dashboard
+          </Link>
+          <MuteToggle />
+        </div>
       </nav>
 
       <main className="max-w-7xl mx-auto px-6 py-20">

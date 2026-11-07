@@ -12,7 +12,7 @@ const AboutSection = () => (
         {/* The Image Frame */}
         <div className="relative w-full h-full border-2 border-blue-500 overflow-hidden bg-[#161e2d]">
           <img 
-            src="/images/avatar.jpg" 
+            src="/images/avatar.webp" 
             alt="Shanmukha Srinivasa"
             className="w-full h-full object-cover filter grayscale contrast-125 hover:grayscale-0 transition-all duration-500"
           />
