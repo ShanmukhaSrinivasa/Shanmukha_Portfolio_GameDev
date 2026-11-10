@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { playClick, getMasterVolume, setMasterVolume, subscribeVolume } from '@/hooks/useSoundEffects';
 
 const DEFAULT_VOLUME = 0.8;
@@ -29,7 +30,10 @@ const MuteToggle = ({ size = 16, className = '' }: MuteToggleProps) => {
       aria-label={label}
       aria-pressed={isMuted}
       title={label}
-      className={`p-2 border border-line text-muted-foreground hover:text-foreground hover:border-primary/60 transition-colors ${className}`}
+      className={cn(
+        'p-2 border border-line text-muted-foreground hover:text-foreground hover:border-primary/60 transition-colors',
+        className,
+      )}
     >
       {isMuted ? <VolumeX size={size} /> : <Volume2 size={size} />}
     </button>

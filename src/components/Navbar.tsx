@@ -74,9 +74,9 @@ const Navbar = () => {
         initial={{ y: -24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className={`pointer-events-auto relative w-full max-w-[50rem] rounded-2xl border border-white/10 backdrop-blur-xl transition-[background-color,box-shadow,max-width] duration-500 ${
+        className={`pointer-events-auto relative w-full max-w-full rounded-2xl border border-white/10 backdrop-blur-xl transition-[background-color,box-shadow] duration-500 md:w-auto ${
           scrolled || open
-            ? 'bg-surface/85 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9),0_8px_30px_-12px_hsl(var(--glow)/0.35),inset_0_1px_0_rgba(255,255,255,0.06)] md:max-w-[46rem]'
+            ? 'bg-surface/85 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9),0_8px_30px_-12px_hsl(var(--glow)/0.35),inset_0_1px_0_rgba(255,255,255,0.06)]'
             : 'bg-surface/70 shadow-[0_20px_50px_-24px_rgba(0,0,0,0.8),0_6px_28px_-14px_hsl(var(--glow)/0.3),inset_0_1px_0_rgba(255,255,255,0.06)]'
         }`}
       >
@@ -86,25 +86,28 @@ const Navbar = () => {
           className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
         />
 
-        <div className={`flex items-center gap-2 pl-2 pr-2 transition-[padding] duration-300 ${scrolled ? 'py-1.5' : 'py-2'}`}>
+        {/* Every control is h-9 (36px); 6px padding all round; 4px between items */}
+        <div className="flex items-center gap-1 p-1.5">
           {/* Brand */}
           <a
             href="#top"
             onClick={toTop}
             aria-label="Back to top"
-            className="group flex shrink-0 items-center gap-2.5 rounded-xl px-2 py-1.5 transition-colors hover:bg-surface-2/70"
+            className="group flex h-9 shrink-0 items-center gap-2.5 rounded-xl pl-1 pr-2.5 transition-colors hover:bg-surface-2/70"
           >
             <span className="grid h-7 w-7 place-items-center rounded-lg border border-primary/40 bg-primary/15 font-mono text-[11px] font-bold text-primary shadow-[0_0_14px_hsl(var(--glow)/0.35)]">
               S_
             </span>
-            <span className="hidden font-display text-sm font-semibold tracking-tight text-foreground sm:block">
+            <span className="hidden font-display text-sm font-semibold tracking-tight text-foreground sm:block md:hidden lg:block">
               Shanmukha<span className="text-primary">.</span>
             </span>
           </a>
 
+          <span aria-hidden="true" className="mx-1 hidden h-5 w-px bg-line md:block" />
+
           {/* Desktop links with a sliding pill */}
           <ul
-            className="mx-auto hidden items-center md:flex"
+            className="hidden items-center gap-0.5 md:flex"
             onPointerLeave={() => setHovered(null)}
           >
             {links.map((link) => {
@@ -123,28 +126,33 @@ const Navbar = () => {
                     onClick={playClick}
                     onPointerEnter={() => setHovered(link.id)}
                     aria-current={isActive ? 'location' : undefined}
-                    className={`relative z-10 flex items-center gap-1.5 px-3.5 py-2 text-[13px] transition-colors ${
+                    className={`relative z-10 flex h-9 items-center px-3.5 text-[13px] transition-colors ${
                       isActive || hovered === link.id ? 'text-foreground' : 'text-muted-foreground'
                     }`}
                   >
-                    {isActive && (
-                      <span className="h-1 w-1 rounded-full bg-term shadow-[0_0_6px_hsl(var(--term))]" aria-hidden="true" />
-                    )}
                     {link.label}
+                    {isActive && (
+                      <span
+                        className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-term shadow-[0_0_6px_hsl(var(--term))]"
+                        aria-hidden="true"
+                      />
+                    )}
                   </a>
                 </li>
               );
             })}
           </ul>
 
+          <span aria-hidden="true" className="mx-1 hidden h-5 w-px bg-line md:block" />
+
           {/* Actions */}
-          <div className="ml-auto flex shrink-0 items-center gap-1.5 md:ml-0">
+          <div className="ml-auto flex shrink-0 items-center gap-1 md:ml-0">
             <a
               href={ITCH}
               target="_blank"
               rel="noopener noreferrer"
               onClick={playClick}
-              className="hidden items-center gap-1 rounded-xl px-3 py-2 text-[13px] text-muted-foreground transition-colors hover:bg-surface-2/70 hover:text-foreground lg:flex"
+              className="hidden h-9 items-center gap-1 rounded-xl px-3 text-[13px] text-muted-foreground transition-colors hover:bg-surface-2/70 hover:text-foreground lg:flex"
             >
               itch.io <ArrowUpRight size={13} className="opacity-60" />
             </a>
@@ -155,7 +163,7 @@ const Navbar = () => {
                 openCommandMenu();
               }}
               aria-label="Open command menu"
-              className="hidden items-center gap-2 rounded-xl border border-line bg-surface-2/60 px-2.5 py-1.5 text-[12px] text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground sm:flex"
+              className="hidden h-9 items-center gap-2 rounded-xl border border-line bg-surface-2/60 pl-3 pr-1.5 text-[12px] text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground sm:flex"
             >
               <Search size={13} />
               <span className="hidden lg:inline">Search</span>
@@ -163,7 +171,7 @@ const Navbar = () => {
                 {isMac ? '⌘K' : 'Ctrl K'}
               </kbd>
             </button>
-            <MuteToggle size={14} className="rounded-xl" />
+            <MuteToggle size={15} className="grid h-9 w-9 place-items-center rounded-xl p-0" />
             <button
               type="button"
               onClick={() => {
