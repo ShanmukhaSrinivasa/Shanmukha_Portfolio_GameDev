@@ -34,6 +34,8 @@ export interface SoftwareProject {
   githubUrl?: string;
   /** Live site, demo, store page or download. */
   liveUrl?: string;
+  /** Label for the liveUrl button, e.g. "Get it on itch.io" (default "Open app"). */
+  liveLabel?: string;
   /** Shown as a small badge on the card. */
   status?: 'live' | 'in-progress' | 'archived';
   /** Highlight this project with a larger card. */
@@ -44,6 +46,7 @@ export interface SoftwareProject {
   platform?: string;
   developmentTime?: string;
   teamSize?: string;
+  license?: string;
   /** Longer overview for the detail page (falls back to `description`). */
   fullDescription?: string;
   /** Feature areas / modules, shown as chips. */
@@ -185,6 +188,152 @@ export const softwareProjects: SoftwareProject[] = [
         { src: `${DTD}-phone-gym.webp`, caption: 'Gym summary and today’s workout' },
         { src: `${DTD}-phone-habits-light.webp`, caption: 'Habits in the light theme' },
       ],
+    },
+  },
+  {
+    slug: 'smart-autosave',
+    title: 'Smart AutoSave & Scene Backup',
+    tagline: 'Never lose a Unity scene again.',
+    type: 'Unity Editor Extension',
+    year: '2026',
+    description:
+      'A free, open-source Unity editor tool that quietly saves your work and keeps rolling scene backups. It saves on an interval you choose, saves the instant you press Play (before any script can freeze the editor), never interrupts a drag, and keeps timestamped snapshots you can restore in one click. Available on itch.io and under review on the Unity Asset Store.',
+    highlights: [
+      'Pre-Play save: scenes hit the disk before any runtime script can freeze the editor',
+      'Drag-safe: waits while you hold the mouse, and never saves mid-compile',
+      'Rolling backups outside Assets/ with one-click restore and automatic pruning',
+      'Live Scene View overlay with a countdown and one-click pause/resume',
+    ],
+    stack: ['C#', 'Unity Editor API', 'UIElements', 'Overlays API', 'Unity Package Manager'],
+    image: '/images/software/smart-autosave-hero.webp',
+    previewVideo: '/videos/smart-autosave-preview.mp4',
+    gallery: [
+      { src: '/images/software/smart-autosave-hero.webp', caption: 'Smart AutoSave: never lose a scene again' },
+      { src: '/images/software/smart-autosave-overlay.webp', caption: 'Scene View overlay: live countdown and one-click pause/resume' },
+      { src: '/images/software/smart-autosave-settings.webp', caption: 'Every option in one place: Tools → Smart AutoSave Settings' },
+      { src: '/images/software/smart-autosave-preplay.webp', caption: 'Pre-Play save: written to disk the instant you press Play' },
+      { src: '/images/software/smart-autosave-backups.webp', caption: 'Rolling backups with one-click restore' },
+      { src: '/images/software/smart-autosave-aware.webp', caption: 'Every loaded scene, plus edits inside Prefab Mode' },
+      { src: '/images/software/smart-autosave-safe.webp', caption: 'Built to stay out of your way' },
+    ],
+    githubUrl: 'https://github.com/ShanmukhaSrinivasa/Unity-Smart-AutoSave',
+    liveUrl: 'https://shanmukha.itch.io/smart-autosave',
+    liveLabel: 'Get it on itch.io',
+    status: 'live',
+    featured: true,
+
+    role: 'Solo developer',
+    platform: 'Unity 2021.3+ & Unity 6 · Editor-only',
+    teamSize: 'Solo',
+    license: 'MIT · free & open source',
+    videoUrl: 'https://www.youtube-nocookie.com/embed/gFy-Rloi064',
+    fullDescription:
+      'Smart AutoSave & Scene Backup is a lightweight, editor-only extension for Unity. It runs in the background of the editor, saving modified scenes, assets and Prefab Mode edits on a timer and again the moment you press Play, so a Play Mode freeze or crash never costs you work. Every save can also drop a timestamped copy of the scene into a Git-ignored backup folder outside Assets/, and the settings window lists those backups with their sizes and a one-click restore. A dockable Scene View overlay shows the countdown and lets you pause it. It installs from a Git URL in the Package Manager or as a .unitypackage, and nothing from it ships in your builds.',
+    modules: [
+      'Timed auto-save',
+      'Pre-Play save',
+      'Drag-safe & compile-safe',
+      'Multi-scene support',
+      'Prefab Mode support',
+      'Rolling scene backups',
+      'One-click restore',
+      'Scene View overlay',
+      'Console logs & toasts',
+      'Package Manager install',
+    ],
+    problem:
+      'Unity can freeze or crash when a runtime script misbehaves in Play Mode, and Ctrl+S is easy to forget during a long level-design session. One bad moment can wipe out hours of unsaved scene work, and Unity’s own tools offer no rolling history to fall back on.',
+    designGoals: [
+      'Save automatically without the user ever noticing it happen.',
+      'Protect the riskiest moment: the instant you press Play.',
+      'Never interfere with what you are doing: no saves mid-drag or mid-compile.',
+      'Keep backups useful but invisible to the project, version control and the import pipeline.',
+      'Ship as a drop-in, editor-only package with zero setup.',
+    ],
+    technicalChallenges: [
+      'Saving at the right moment without interrupting an active drag or slider.',
+      'Saving before Play Mode starts, when scripts may immediately freeze the editor.',
+      'Handling several additively loaded scenes and isolated Prefab Mode edits.',
+      'Keeping backups out of Assets/ so Unity doesn’t spend time re-importing them.',
+      'Persisting settings per machine without touching the project or scene files.',
+    ],
+    solutions: [
+      'An EditorApplication.update loop that skips while GUIUtility.hotControl is set, in Play Mode or while compiling.',
+      'A playModeStateChanged hook that saves on ExitingEditMode, the instant Play is pressed.',
+      'Iterating the loaded scenes and the current PrefabStage, saving only what is dirty.',
+      'Timestamped .unity copies in <ProjectRoot>/AutoSaveBackups/ with an auto-generated .gitignore and pruning to a configurable limit.',
+      'Settings stored in EditorPrefs behind typed properties, with sensible defaults and a 5-second minimum interval.',
+    ],
+    results: [
+      'Released free on itch.io and submitted to the Unity Asset Store, where it is under review.',
+      'Open source under MIT, installable from a Git URL in the Package Manager or as a .unitypackage.',
+      'Editor-only assembly: works with Built-in, URP and HDRP, and adds nothing to player builds.',
+      'A 57-second trailer with an original soundtrack and store-ready marketing images.',
+    ],
+    lessonsLearned: [
+      'The best tools are invisible: guarding against drags and compiles mattered more than features.',
+      'Editor callbacks like ExitingEditMode let you act at exactly the right moment.',
+      'Where files live matters: keeping backups outside Assets/ avoided re-import lag entirely.',
+      'Shipping is its own project: store rules, key images, licensing and a trailer took real work.',
+    ],
+    technicalDeepDive: [
+      '[InitializeOnLoad] static constructor hooks EditorApplication.update and playModeStateChanged.',
+      'Timer runs on EditorApplication.timeSinceStartup and re-arms safely on the first update after loading.',
+      'Saves dirty scenes with EditorSceneManager.SaveOpenScenes() and assets with AssetDatabase.SaveAssets().',
+      'Prefab Mode edits saved via PrefabUtility.SaveAsPrefabAsset on the current PrefabStage.',
+      'Backups pruned per scene by creation time to keep between 1 and 10 copies.',
+      'Restore copies the snapshot over the scene, refreshes the AssetDatabase and reopens it.',
+      'Scene View overlay built on the Overlays API with UIElements, reading the live countdown.',
+      'Separate editor assembly definition (Shanmukha.AutoSave.Editor) keeps it out of builds.',
+    ],
+    codeSnippet: {
+      title: 'AutoSaveTool.cs · the save loop and the pre-Play save',
+      language: 'C#',
+      code: `private static void OnEditorUpdate()
+{
+    if (_nextSaveTime < 0)
+    {
+        ResetTimer();
+    }
+
+    if (!IsEnabled)
+    {
+        return;
+    }
+
+    // Never auto-save in Play Mode or while scripts compile
+    if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling)
+    {
+        return;
+    }
+
+    // Wait while the user is holding the mouse (dragging an object or slider)
+    if (GUIUtility.hotControl != 0)
+    {
+        return;
+    }
+
+    if (EditorApplication.timeSinceStartup >= _nextSaveTime)
+    {
+        TryAutoSave("Timer");
+        ResetTimer();
+    }
+}
+
+private static void OnPlayModeChanged(PlayModeStateChange state)
+{
+    // ExitingEditMode fires the instant Play is pressed, before Play Mode starts
+    if (IsEnabled && SaveOnPlay && state == PlayModeStateChange.ExitingEditMode)
+    {
+        TryAutoSave("Pre-Play Mode");
+    }
+    else if (state == PlayModeStateChange.EnteredEditMode)
+    {
+        ResetTimer();
+    }
+}`,
+      caption:
+        'The editor loop only saves when it is safe to: never in Play Mode, mid-compile or while you are dragging. The Play button gets its own save before any runtime code runs.',
     },
   },
 ];

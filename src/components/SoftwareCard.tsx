@@ -201,7 +201,7 @@ const SoftwareCard = ({ project }: SoftwareCardProps) => {
                     onClick={playClick}
                     className="inline-flex items-center gap-1.5 border border-line px-3.5 py-2 text-xs font-semibold text-foreground transition-colors hover:border-primary"
                   >
-                    Open app <ArrowUpRight size={13} />
+                    {project.liveLabel ?? 'Open app'} <ArrowUpRight size={13} />
                   </a>
                 )}
                 {gallery.length > 0 && (

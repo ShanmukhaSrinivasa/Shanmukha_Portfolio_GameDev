@@ -245,7 +245,7 @@ export const ProjectDetail = () => {
         </Reveal>
 
         {/* Overview */}
-        <section className="grid gap-10 py-24 md:grid-cols-[1fr_2fr] md:py-32">
+        <section className="grid grid-cols-1 gap-10 py-24 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:py-32 [&>*]:min-w-0">
           <Reveal>
             <SectionLabel index={nextNo()}>Overview</SectionLabel>
             <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] md:text-4xl">The game</h2>
@@ -347,7 +347,7 @@ export const ProjectDetail = () => {
         )}
 
         {/* Technical log + code */}
-        <section className="grid gap-16 border-t border-line py-24 md:grid-cols-[1fr_1.4fr] md:py-32">
+        <section className="grid grid-cols-1 gap-16 border-t border-line py-24 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] md:py-32 [&>*]:min-w-0">
           <Reveal>
             <SectionLabel index={nextNo()}>Under the hood</SectionLabel>
             <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] md:text-4xl">Technical log</h2>

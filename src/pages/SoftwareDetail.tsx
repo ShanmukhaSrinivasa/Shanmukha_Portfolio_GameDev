@@ -70,15 +70,17 @@ const SoftwareDetail = () => {
     setLightboxIndex(Math.max(0, images.findIndex((i) => i.src === img.src)));
   };
 
+  // Only facts the project actually has; the bar's columns adapt to the count.
   const facts = [
     { label: 'Role', value: project.role ?? 'Developer' },
     { label: 'Year', value: project.year },
     { label: 'Type', value: project.type },
-    { label: 'Platform', value: project.platform ?? '—' },
-    { label: 'Dev time', value: project.developmentTime ?? '—' },
+    { label: 'Platform', value: project.platform },
+    { label: 'Dev time', value: project.developmentTime },
     { label: 'Team', value: project.teamSize ?? 'Solo' },
+    { label: 'License', value: project.license },
     { label: 'Built with', value: project.stack[0] },
-  ];
+  ].filter((f): f is { label: string; value: string } => !!f.value);
 
   const caseLists = [
     { title: 'Design goals', items: project.designGoals },
@@ -158,7 +160,7 @@ const SoftwareDetail = () => {
                 onClick={playClick}
                 className="group inline-flex items-center gap-2 bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
               >
-                Open the app
+                {project.liveLabel ?? 'Open the app'}
                 <ArrowUpRight size={14} className="opacity-70 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </a>
             )}
@@ -222,7 +224,10 @@ const SoftwareDetail = () => {
 
         {/* Facts bar */}
         <Reveal className="mt-px">
-          <dl className="grid grid-cols-2 gap-px border-x border-b border-line bg-line sm:grid-cols-4 lg:grid-cols-7">
+          <dl
+            className="grid grid-cols-2 gap-px border-x border-b border-line bg-line sm:grid-cols-4 lg:[grid-template-columns:repeat(var(--facts),minmax(0,1fr))]"
+            style={{ '--facts': facts.length } as React.CSSProperties}
+          >
             {facts.map((f) => (
               <div key={f.label} className="bg-background px-5 py-5">
                 <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70">{f.label}</dt>
@@ -233,7 +238,7 @@ const SoftwareDetail = () => {
         </Reveal>
 
         {/* Overview + modules */}
-        <section className="grid gap-10 py-24 md:grid-cols-[1fr_2fr] md:py-32">
+        <section className="grid grid-cols-1 gap-10 py-24 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:py-32 [&>*]:min-w-0">
           <Reveal>
             <SectionLabel index={nextNo()}>Overview</SectionLabel>
             <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] md:text-4xl">The app</h2>
@@ -426,7 +431,7 @@ const SoftwareDetail = () => {
         )}
 
         {/* Technical log + stack + code */}
-        <section className="grid gap-16 border-t border-line py-24 md:grid-cols-[1fr_1.4fr] md:py-32">
+        <section className="grid grid-cols-1 gap-16 border-t border-line py-24 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] md:py-32 [&>*]:min-w-0">
           <Reveal>
             <SectionLabel index={nextNo()}>Under the hood</SectionLabel>
             <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] md:text-4xl">Technical log</h2>
