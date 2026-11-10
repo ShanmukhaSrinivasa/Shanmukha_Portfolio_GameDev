@@ -1,45 +1,71 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatePresence, motion } from 'motion/react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Play } from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Pause, Play } from 'lucide-react';
 import { projectsData } from '../data/projectsData';
 import { playClick } from '@/hooks/useSoundEffects';
 import useSpotlight from '@/hooks/useSpotlight';
 import TerminalWindow from './TerminalWindow';
+import useSlideTimer from '@/hooks/useSlideTimer';
 
 const SLIDE_MS = 6000;
 const featuredProjects = projectsData.filter((project) => project.showcase);
 
 const FeaturedProject = () => {
+  const reduce = useReducedMotion();
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+  // Autoplay is on by default, but starts paused for visitors who prefer reduced motion.
+  const [playing, setPlaying] = useState(() => !reduce);
+  const [inView, setInView] = useState(false);
+  const [tabVisible, setTabVisible] = useState(true);
+  const sectionRef = useRef<HTMLElement>(null);
   const onPointerMove = useSpotlight<HTMLDivElement>();
   const count = featuredProjects.length;
 
+  const running = playing && inView && tabVisible && count > 1;
+  const next = useCallback(() => setIndex((i) => (i + 1) % count), [count]);
+  const { barRef, secondsLeft, reset, paint } = useSlideTimer(running, next, SLIDE_MS);
+
+  // Only advance while the carousel is actually on screen and the tab is visible.
   useEffect(() => {
-    if (paused || count < 2) return;
-    const t = window.setTimeout(() => setIndex((i) => (i + 1) % count), SLIDE_MS);
-    return () => window.clearTimeout(t);
-  }, [index, paused, count]);
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.35 });
+    io.observe(el);
+    const onVis = () => setTabVisible(!document.hidden);
+    document.addEventListener('visibilitychange', onVis);
+    return () => {
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVis);
+    };
+  }, []);
+
+  // Re-paint after the active slide (and so the active bar element) changes.
+  useEffect(() => {
+    paint();
+  }, [index, paint]);
 
   const project = featuredProjects[index];
   if (!project) return null;
 
-  const go = (next: number) => {
+  const go = (target: number) => {
     playClick();
-    setIndex((next + count) % count);
+    reset();
+    setIndex((target + count) % count);
+  };
+
+  const togglePlaying = () => {
+    playClick();
+    setPlaying((p) => !p);
   };
 
   return (
     <section
       id="featured"
+      ref={sectionRef}
       aria-roledescription="carousel"
       aria-label="Featured projects"
       className="border-y border-line bg-surface/60 px-6 py-24 md:py-32"
-      onPointerEnter={() => setPaused(true)}
-      onPointerLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={() => setPaused(false)}
     >
       <div className="mx-auto max-w-6xl">
         {/* Header row */}
@@ -52,13 +78,38 @@ const FeaturedProject = () => {
             <p className="mb-3 font-mono text-sm text-muted-foreground">
               <span className="text-term">$</span> ./showcase --autoplay
             </p>
-            <p className="font-mono text-sm text-muted-foreground">
-              <span className="text-foreground">{String(index + 1).padStart(2, '0')}</span>
-              {' / '}
-              {String(count).padStart(2, '0')}
+            <p className="flex flex-wrap items-center gap-x-3 font-mono text-sm text-muted-foreground">
+              <span>
+                <span className="text-foreground">{String(index + 1).padStart(2, '0')}</span>
+                {' / '}
+                {String(count).padStart(2, '0')}
+              </span>
+              <span className="text-line" aria-hidden="true">
+                |
+              </span>
+              {playing ? (
+                <span className="text-term">
+                  &#9654; next in{' '}
+                  <span className="inline-block min-w-[2ch] tabular-nums text-foreground">{secondsLeft}s</span>
+                </span>
+              ) : (
+                <span className="text-[#febc2e]">&#10074;&#10074; paused</span>
+              )}
             </p>
           </div>
           <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={togglePlaying}
+              aria-pressed={!playing}
+              aria-label={playing ? 'Pause autoplay' : 'Resume autoplay'}
+              title={playing ? 'Pause autoplay' : 'Resume autoplay'}
+              className={`grid h-11 w-11 place-items-center border transition-colors hover:text-foreground ${
+                playing ? 'border-line text-muted-foreground hover:border-primary' : 'border-[#febc2e]/60 text-[#febc2e]'
+              }`}
+            >
+              {playing ? <Pause size={15} /> : <Play size={15} className="fill-current" />}
+            </button>
             <button
               type="button"
               onClick={() => go(index - 1)}
@@ -166,15 +217,12 @@ const FeaturedProject = () => {
               aria-selected={i === index}
               aria-label={p.title}
               onClick={() => go(i)}
-              className="relative h-1 flex-1 overflow-hidden bg-line"
+              className="relative h-1 flex-1 overflow-hidden bg-line transition-[height] hover:h-1.5"
             >
               {i === index && (
-                <motion.span
-                  key={`${p.slug}-${paused}`}
-                  className="absolute inset-y-0 left-0 bg-primary"
-                  initial={{ width: paused ? '100%' : '0%' }}
-                  animate={{ width: '100%' }}
-                  transition={{ duration: paused ? 0 : SLIDE_MS / 1000, ease: 'linear' }}
+                <span
+                  ref={barRef}
+                  className={`absolute inset-y-0 left-0 w-0 ${playing ? 'bg-primary' : 'bg-[#febc2e]'}`}
                 />
               )}
               {i < index && <span className="absolute inset-0 bg-primary/40" />}
