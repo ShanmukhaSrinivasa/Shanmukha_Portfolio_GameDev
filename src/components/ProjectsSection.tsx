@@ -10,7 +10,7 @@ const ProjectsSection = () => {
   const projects = projectsData.filter((p) => p.featured);
 
   return (
-    <SectionBlock id="projects" eyebrow="02 — All work" command="ls -la ~/games" title="Projects" wide>
+    <SectionBlock id="projects" eyebrow="02 — Games" command="ls -la ~/games" title="Games" wide>
       <motion.div
         className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
         initial="hidden"

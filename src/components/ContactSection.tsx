@@ -67,7 +67,7 @@ const ContactSection = () => {
   };
 
   return (
-    <SectionBlock id="contact" eyebrow="06 — Contact" command="mail --compose" title="Get in touch" wide>
+    <SectionBlock id="contact" eyebrow="07 — Contact" command="mail --compose" title="Get in touch" wide>
       <div className="grid md:grid-cols-2 gap-8 md:gap-20">
         
         {/* Left Column: Information Cards */}

@@ -7,6 +7,7 @@ const WINDOWS = [
   { id: 'top', label: 'home' },
   { id: 'featured', label: 'featured' },
   { id: 'projects', label: 'games' },
+  { id: 'software', label: 'dev' },
   { id: 'about', label: 'about' },
   { id: 'education', label: 'edu' },
   { id: 'skills', label: 'skills' },

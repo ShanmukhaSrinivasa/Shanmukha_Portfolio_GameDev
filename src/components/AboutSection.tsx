@@ -2,7 +2,7 @@ import SectionBlock from './SectionBlock';
 import { Gamepad2 } from 'lucide-react';
 
 const AboutSection = () => (
-  <SectionBlock id="about" eyebrow="03 — About" command="cat about.md" title="About me">
+  <SectionBlock id="about" eyebrow="04 — About" command="cat about.md" title="About me">
     <div className="flex flex-col md:flex-row items-center md:items-start gap-12">
       {/* New Styled Avatar Container */}
       <div className="relative w-64 h-64 flex-shrink-0 group">

@@ -14,7 +14,7 @@ const education = [
 ];
 
 const EducationSection = () => (
-  <SectionBlock id="education" eyebrow="04 — Education" command="history | grep edu" title="Education">
+  <SectionBlock id="education" eyebrow="05 — Education" command="history | grep edu" title="Education">
     <div className="space-y-10">
       {education.map((item) => (
         <div

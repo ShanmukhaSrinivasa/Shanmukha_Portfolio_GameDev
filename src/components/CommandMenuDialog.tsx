@@ -15,11 +15,13 @@ import {
   Youtube,
 } from 'lucide-react';
 import { projectsData } from '@/data/projectsData';
+import { softwareProjects } from '@/data/softwareProjects';
 import { OPEN_TERMINAL } from '@/lib/events';
 import { getMasterVolume, playClick, setMasterVolume } from '@/hooks/useSoundEffects';
 
 const SECTIONS = [
-  { id: 'projects', label: 'Projects' },
+  { id: 'projects', label: 'Games' },
+  { id: 'software', label: 'Software' },
   { id: 'about', label: 'About' },
   { id: 'education', label: 'Education' },
   { id: 'skills', label: 'Technical skills' },
@@ -132,7 +134,7 @@ const CommandMenuDialog = ({ open, setOpen }: CommandMenuDialogProps) => {
           No results.
         </Command.Empty>
 
-        <Command.Group heading="Projects" className={groupClass}>
+        <Command.Group heading="Games" className={groupClass}>
           {projectsData.map((p) => (
             <Item
               key={p.slug}
@@ -145,6 +147,22 @@ const CommandMenuDialog = ({ open, setOpen }: CommandMenuDialogProps) => {
             </Item>
           ))}
         </Command.Group>
+
+        {softwareProjects.length > 0 && (
+          <Command.Group heading="Software" className={groupClass}>
+            {softwareProjects.map((p) => (
+              <Item
+                key={p.slug}
+                icon={<ArrowRight size={15} />}
+                hint={p.type}
+                keywords={p.stack}
+                onSelect={() => run(() => navigate(`/software/${p.slug}`))}
+              >
+                {p.title}
+              </Item>
+            ))}
+          </Command.Group>
+        )}
 
         <Command.Group heading="Jump to" className={groupClass}>
           {SECTIONS.map((s) => (

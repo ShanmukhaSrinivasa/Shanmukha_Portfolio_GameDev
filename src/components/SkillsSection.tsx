@@ -69,7 +69,7 @@ const skillCategories = [
 
 const SkillsSection = () => {
   return (
-    <SectionBlock id="skills" eyebrow="05 — Toolkit" command="neofetch --skills" title="Technical arsenal" wide>
+    <SectionBlock id="skills" eyebrow="06 — Toolkit" command="neofetch --skills" title="Technical arsenal" wide>
       <div className="flex flex-col gap-16">
         {/* Skill Modules */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

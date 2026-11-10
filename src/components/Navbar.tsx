@@ -7,7 +7,8 @@ import MuteToggle from './MuteToggle';
 import { OPEN_COMMAND_MENU } from '@/lib/events';
 
 const links = [
-  { label: 'Projects', href: '#projects', id: 'projects' },
+  { label: 'Games', href: '#projects', id: 'projects' },
+  { label: 'Software', href: '#software', id: 'software' },
   { label: 'About', href: '#about', id: 'about' },
   { label: 'Education', href: '#education', id: 'education' },
   { label: 'Skills', href: '#skills', id: 'skills' },

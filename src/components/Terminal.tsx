@@ -14,6 +14,7 @@ import {
   playClick,
 } from '@/hooks/useSoundEffects';
 import { projectsData } from '@/data/projectsData';
+import { softwareProjects } from '@/data/softwareProjects';
 import { OPEN_TERMINAL } from '@/lib/events';
 
 interface CommandOutput {
@@ -93,6 +94,7 @@ const Terminal = () => {
             <span className="text-blue-400 font-bold uppercase">about</span> <span>Credentials & Background</span>
             <span className="text-blue-400 font-bold uppercase">skills</span> <span>Technical Arsenal</span>
             <span className="text-blue-400 font-bold uppercase">projects</span> <span>Shipped Titles</span>
+            <span className="text-blue-400 font-bold uppercase">software</span> <span>Apps, Tools & Libraries</span>
             <span className="text-blue-400 font-bold uppercase">contact</span> <span>Signal Frequency</span>
             <span className="text-blue-400 font-bold uppercase">clear</span> <span>Wipe Buffer</span>
             <span className="text-blue-400 font-bold uppercase">exit</span> <span>Terminate Session</span>
@@ -119,6 +121,18 @@ const Terminal = () => {
               </a>
             ))}
           </div>
+        );
+      case 'software':
+        return softwareProjects.length ? (
+          <div className="flex flex-col gap-1 text-[11px] md:text-xs">
+            {softwareProjects.map((p, i) => (
+              <a key={p.slug} href={`/software/${p.slug}`} className="text-blue-400 hover:underline">
+                {i + 1}. {p.title} ({p.type})
+              </a>
+            ))}
+          </div>
+        ) : (
+          'total 0 — software projects are compiling. Check back soon.'
         );
       case 'contact':
         return (
@@ -158,6 +172,7 @@ const Terminal = () => {
       const lower = trimmedCmd.toLowerCase();
       if (lower.match(/^(hi|hello|hey)/)) response = "Connection established. How can I assist with your deployment today?";
       else if (lower.match(/(who|about|dev)/)) response = getCommandResponse('about');
+      else if (lower.match(/(software|app|tool|library|web)/)) response = getCommandResponse('software');
       else if (lower.match(/(skill|engine|unity|unreal|cpp|c#)/)) response = getCommandResponse('skills');
       else if (lower.match(/(project|game|itch|work)/)) response = getCommandResponse('projects');
       else if (lower.match(/(contact|hire|email|reach)/)) response = getCommandResponse('contact');

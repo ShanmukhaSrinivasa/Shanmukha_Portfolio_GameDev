@@ -80,7 +80,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
           {project.previewVideo && (
-            <span className="absolute right-3 top-3 flex items-center gap-1.5 bg-black/50 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-white/80 backdrop-blur-sm">
+            <span className="absolute right-3 top-3 hidden items-center gap-1.5 bg-black/50 px-2 py-1 font-mono [@media(hover:hover)]:flex text-[10px] uppercase tracking-[0.15em] text-white/80 backdrop-blur-sm">
               <Play size={10} className="fill-current" /> Hover to play
             </span>
           )}
